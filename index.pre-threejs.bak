@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoxy Flooring & Basement Waterproofing - Premium Local Service</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS for any additional styles -->
+    <style>
+        /* We can add custom styles here if needed, but we'll try to stick to Tailwind */
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+    <!-- Top Announcement Bar -->
+    <div class="bg-amber-600 text-white px-4 py-2 text-sm flex items-center justify-between sm:flex-row sm:justify-start">
+        <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+            </svg>
+            <span>Emergency Waterproofing Available 24/7</span>
+        </div>
+        <div class="hidden sm:flex sm:items-center space-x-4">
+            <span>Serving Austin, TX & Surrounding Areas</span>
+            <a href="tel:+15550192834" class="text-amber-200 hover:text-amber-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-0.502 1.21l-2.257 1.13a11.042 11.042 0 015.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 5 16.284 5 11V5a2 2 0 012-2z" />
+                </svg>
+                (555) 019-2834
+            </a>
+        </div>
+        <div class="flex items-center space-x-2">
+            <!-- Logo instead of burger -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg hover:bg-amber-500">
+                <img src="https://via.placeholder.com/40x40/1e293b/f59e0b?text=EP" alt="EpoxyGuard Pros Logo" class="h-6 w-6">
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="md:hidden bg-amber-600">
+        <nav class="px-4 py-3 space-y-2">
+            <a href="#services" class="block text-amber-200 hover:text-amber-100 px-3 py-2 rounded">Services</a>
+            <a href="#before-after" class="block text-amber-200 hover:text-amber-100 px-3 py-2 rounded">Before/After</a>
+            <a href="#cost-calculator" class="block text-amber-200 hover:text-amber-100 px-3 py-2 rounded">Cost Calculator</a>
+            <a href="#reviews" class="block text-amber-200 hover:text-amber-100 px-3 py-2 rounded">Reviews</a>
+            <a href="#about" class="block text-amber-200 hover:text-amber-100 px-3 py-2 rounded">About</a>
+            <a href="#" class="block bg-amber-500 text-white px-3 py-2 rounded">Get Free Quote</a>
+        </nav>
+    </div>
+
+    <!-- Sticky Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <div class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                </svg>
+                <span class="font-bold text-xl text-gray-900">EpoxyGuard Pros</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#services" class="text-gray-600 hover:text-gray-900 font-medium">Services</a>
+                <a href="#before-after" class="text-gray-600 hover:text-gray-900 font-medium">Before/After</a>
+                <a href="#cost-calculator" class="text-gray-600 hover:text-gray-900 font-medium">Cost Calculator</a>
+                <a href="#reviews" class="text-gray-600 hover:text-gray-900 font-medium">Reviews</a>
+                <a href="#about" class="text-gray-600 hover:text-gray-900 font-medium">About</a>
+            </nav>
+            <a href="#cost-calculator" class="bg-amber-600 text-white px-5 py-2 rounded-md hover:bg-amber-700 transition-colors">
+                Get Free Quote
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gray-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                        Protect Your Basement. Elevate Your Floors.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Commercial-grade Epoxy Flooring & Lifetime-Guaranteed Basement Waterproofing. Built to last a lifetime.
+                    </p>
+                    <div class="space-y-4">
+                        <button id="primary-cta" class="bg-amber-600 text-white px-6 py-3 rounded-md hover:bg-amber-700 transition-colors font-medium flex items-center space-x-2">
+                            Get Instant Quote (Takes 60 Seconds)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                        <a href="tel:+15550192834" class="border border-amber-600 text-amber-600 px-6 py-3 rounded-md hover:bg-amber-50 transition-colors flex items-center space-x-2">
+                            Call (555) 019-2834
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-0.502 1.21l-2.257 1.13a11.042 11.042 0 015.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 011.684.948V19a2 2 0 01-2 2h-1C9.716 21 5 16.284 5 11V5a2 2 0 012-2z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:mt-16 lg:-mr-12">
+                    <!-- Lead Capture Form Floating Box -->
+                    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Get Your Free Quote in 3 Simple Steps</h2>
+                        <form id="lead-form" class="space-y-4">
+                            <!-- Step 1: Service Needed -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">What service do you need?</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="">Select Service</option>
+                                    <option value="epoxy">Metallic & Decorative Epoxy Flooring</option>
+                                    <option value="waterproofing">Basement Waterproofing</option>
+                                    <option value="both">Both Epoxy & Waterproofing</option>
+                                </select>
+                            </div>
+                            <!-- Step 2: Area & Zip -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Area Size (sq.ft)</label>
+                                    <input type="number" min="100" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500" placeholder="e.g., 500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500" placeholder="e.g., 78701">
+                                </div>
+                            </div>
+                            <!-- Step 3: Contact Info -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500" placeholder="First Last">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                    <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500" placeholder="(555) 123-4567">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-amber-600 text-white px-5 py-3 rounded-md hover:bg-amber-700 transition-colors font-medium mt-2">
+                                Get My Free Quote
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center mt-12 space-x-6">
+            <div class="flex items-center space-x-2 bg-white p-4 rounded-lg shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                </svg>
+                <span class="text-sm font-medium">Licensed & Insured</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white p-4 rounded-lg shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.768 0 3.42 3.42 0 001.946.806 3.42 3.42 0 014.768 0 3.42 3.42 0 001.946.806 3.42 3.42 0 014.768 0 3.42 3.42 0 001.946.806 3.42 3.42 0 014.768 0V14a2 2 0 01-2 2h-1V9a2 2 0 00-4 0v5h-1V4.697z" />
+                </svg>
+                <span class="text-sm font-medium">500+ 5-Star Reviews</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white p-4 rounded-lg shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                </svg>
+                <span class="text-sm font-medium">Lifetime Warranty</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white p-4 rounded-lg shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                </svg>
+                <span class="text-sm font-medium">0% Financing Available</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Dual-Toggle / Dual Card Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Our Core Services</h2>
+            <div class="grid gap-8 md:grid-cols-2">
+                <!-- Epoxy Flooring Card -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-amber-500 transition-colors">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Metallic & Decorative Epoxy Flooring</h3>
+                            <p class="text-gray-600 mb-4">Transform your garage, patio, or commercial space with high-gloss, durable epoxy coatings that resist chemicals, stains, and wear.</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                                <li>High-gloss finish available in multiple colors</li>
+                                <li>Chemical and stain resistant</li>
+                                <li>Seamless and easy to clean</li>
+                                <li>15-year residential warranty</li>
+                                <li>Anti-slip additives available</li>
+                            </ul>
+                            <a href="#cost-calculator" class="bg-amber-600 text-white px-5 py-2 rounded-md hover:bg-amber-700 transition-colors w-full text-center">
+                                Request Free Estimate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Basement Waterproofing Card -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-amber-500 transition-colors">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Heavy-Duty Basement Waterproofing</h3>
+                            <p class="text-gray-600 mb-4">Protect your home from water damage with interior drain tile systems, sump pumps, and wall crack repair solutions.</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                                <li>Interior drain tile systems</li>
+                                <li>Sump pump installation and backup</li>
+                                <li>Wall crack and joint repair</li>
+                                <li>Lifetime transferable warranty</li>
+                                <li>Mold and mildew prevention</li>
+                            </ul>
+                            <a href="#cost-calculator" class="bg-amber-600 text-white px-5 py-2 rounded-md hover:bg-amber-700 transition-colors w-full text-center">
+                                Request Free Estimate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Before/After Slider -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">See the Transformation</h2>
+            <div class="relative">
+                <!-- Before Image (left side) -->
+                <div class="w-full h-96 bg-gray-200 overflow-hidden rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                         alt="Before: Cracked and wet basement floor"
+                         class="w-full h-full object-cover">
+                </div>
+                <!-- After Image (right side, initially hidden) -->
+                <div class="absolute inset-0 w-full h-96 overflow-hidden rounded-lg" id="after-image-container">
+                    <img src="https://images.unsplash.com/photo-1600185365845-2d47e0a4e7d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                         alt="After: High-gloss epoxy floor"
+                         class="w-full h-full object-cover">
+                    <!-- Slider Handle -->
+                    <div id="slider-handle" class="absolute left-0 top-0 h-full w-1 bg-amber-600 cursor-col-resize"></div>
+                </div>
+            </div>
+            <p class="mt-4 text-center text-gray-500">Drag the slider to see the transformation</p>
+        </div>
+    </section>
+
+    <!-- Instant Cost Calculator -->
+    <section id="cost-calculator" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Instant Cost Estimate</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Get an instant price range for your epoxy flooring or basement waterproofing project in seconds.
+            </p>
+            <div class="bg-gray-50 p-8 rounded-xl">
+                <form id="calculator-form" class="space-y-6">
+                    <!-- Project Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="epoxy" checked class="h-4 w-4 text-amber-600">
+                                <span>Epoxy Flooring</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="waterproofing" class="h-4 w-4 text-amber-600">
+                                <span>Basement Waterproofing</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="both" class="h-4 w-4 text-amber-600">
+                                <span>Both</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Area Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Area Size (sq.ft)</label>
+                        <div class="flex items-center">
+                            <input type="range" id="area-slider" min="200" max="3000" value="500" class="w-full h-2 bg-gray-200 rounded-full">
+                            <span id="area-value" class="ml-4 text-amber-600 font-medium min-w-[4ch]">500</span> sq.ft
+                        </div>
+                    </div>
+                    <!-- Floor Condition -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Floor Condition</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="good" checked class="h-4 w-4 text-amber-600">
+                                <span>Good</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="minor" class="h-4 w-4 text-amber-600">
+                                <span>Minor Cracks</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="severe" class="h-4 w-4 text-amber-600">
+                                <span>Severe Water Damage</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Estimated Cost -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Estimated Cost Range</h3>
+                        <p class="text-2xl font-bold text-amber-600" id="cost-range">$1,500 - $3,000</p>
+                        <p class="text-sm text-gray-500 mt-2">*Final price determined after on-site inspection</p>
+                        <button type="submit" class="w-full mt-6 bg-amber-600 text-white px-5 py-3 rounded-md hover:bg-amber-700 transition-colors font-medium">
+                            Lock in Your Discount Rate & Schedule On-Site Inspection
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof & Reviews Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Trusted by Homeowners & Businesses</h2>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Google Review Badge -->
+                <div class="bg-white p-6 rounded-xl text-center shadow">
+                    <div class="flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                        </svg>
+                        <span>Google Reviews</span>
+                    </div>
+                    <div class="text-3xl font-bold text-amber-600 mb-2">4.9</div>
+                    <p class="text-gray-600">★★★★★ (320+ reviews)</p>
+                </div>
+                <!-- Video Testimonial Placeholder -->
+                <div class="bg-white p-6 rounded-xl shadow">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Video Testimonials</h3>
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1580915846236-342c5a8759d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+                             alt="Happy customer testimonial"
+                             class="w-full h-full object-cover rounded">
+                    </div>
+                </div>
+                <!-- Customer Quote -->
+                <div class="bg-white p-6 rounded-xl shadow">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Customer Quote</h3>
+                    <p class="italic text-gray-600 mb-4">"EpoxyGuard Pros transformed our basement from a damp, unusable space into a beautiful, dry living area. The team was professional, and the lifetime warranty gives us peace of mind."</p>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+                             alt="John D."
+                             class="h-10 w-10 rounded-full">
+                        <div>
+                            <p class="font-medium text-gray-900">John D., Austin, TX</p>
+                            <p class="text-sm text-gray-500">Basement Waterproofing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs & Edu-Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <!-- Accordion Item 1 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <div class="flex items-center justify-between p-5 bg-gray-50 cursor-pointer" id="faq-1">
+                        <h3 class="text-lg font-medium text-gray-900">How long does epoxy flooring installation take?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-200" id="faq-1-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div class="p-5 text-gray-600" id="faq-1-answer">
+                        Most residential epoxy flooring projects are completed in 1-2 days. The process includes surface preparation, primer application, epoxy coating, and top seal. Larger commercial projects may take longer depending on size and complexity.
+                    </div>
+                </div>
+                <!-- Accordion Item 2 -->
+                <div class="border border-gray-200 rounded-lg mt-2">
+                    <div class="flex items-center justify-between p-5 bg-gray-50 cursor-pointer" id="faq-2">
+                        <h3 class="text-lg font-medium text-gray-900">Does basement waterproofing come with a warranty?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-200" id="faq-2-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div class="p-5 text-gray-600" id="faq-2-answer">
+                        Yes! Our basement waterproofing systems come with a lifetime transferable warranty that covers both parts and labor. This warranty is backed by our 20+ years of experience and is designed to give you long-term peace of mind.
+                    </div>
+                </div>
+                <!-- Accordion Item 3 -->
+                <div class="border border-gray-200 rounded-lg mt-2">
+                    <div class="flex items-center justify-between p-5 bg-gray-50 cursor-pointer" id="faq-3">
+                        <h3 class="text-lg font-medium text-gray-900">What options do I have if my basement is actively flooding?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-200" id="faq-3-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div class="p-5 text-gray-600" id="faq-3-answer">
+                        For active flooding, we recommend an immediate emergency response. We offer 24/7 emergency waterproofing services that include interior drainage systems, sump pump installation, and water extraction to stop the flooding and prevent further damage.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-4">EpoxyGuard Pros</h3>
+                    <p class="text-sm">Licensed & Insured Contractor<br>License #: TX-123456789</p>
+                    <p class="text-sm mt-2">123 Contractor Drive<br>Austin, TX 78701</p>
+                    <p class="text-sm mt-2">Mon-Fri: 8AM-6PM | Sat: 9AM-3PM</p>
+                </div>
+                <!-- Services -->
+                <div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-4">Our Services</h3>
+                    <nav class="space-y-2">
+                        <a href="#services" class="hover:text-amber-200 transition-colors">Epoxy Flooring</a>
+                        <a href="#services" class="hover:text-amber-200 transition-colors">Basement Waterproofing</a>
+                        <a href="#services" class="hover:text-amber-200 transition-colors">Concrete Repair</a>
+                        <a href="#services" class="hover:text-amber-200 transition-colors">Garage Floor Coatings</a>
+                    </nav>
+                </div>
+                <!-- Resources -->
+                <div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-4">Resources</h3>
+                    <nav class="space-y-2">
+                        <a href="#cost-calculator" class="hover:text-amber-200 transition-colors">Cost Calculator</a>
+                        <a href="#before-after" class="hover:text-amber-200 transition-colors">Before/After Gallery</a>
+                        <a href="#faq" class="hover:text-amber-200 transition-colors">FAQs</a>
+                        <a href="#" class="hover:text-amber-200 transition-colors">Blog</a>
+                    </nav>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-4">Contact Us</h3>
+                    <p class="text-sm flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-0.502 1.21l-2.257 1.13a11.042 11.042 0 015.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 011.684.948V19a2 2 0 01-2 2h-1C9.716 21 5 16.284 5 11V5a2 2 0 012-2z" />
+                        </svg>
+                        <span>(555) 019-2834</span>
+                    </p>
+                    <p class="text-sm flex items-center space-x-2 mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l6.742 13.366L12 21l2.258-3.124L3 8z" />
+                        </svg>
+                        <span>info@epoxyguardpros.com</span>
+                    </p>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-gray-800 text-center text-sm">
+                &copy; 2026 EpoxyGuard Pros. All rights reserved. | <a href="#" class="text-amber-400 hover:text-amber-300">Privacy Policy</a> | <a href="#" class="text-amber-400 hover:text-amber-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA Bar (Hidden on desktop) -->
+    <div class="hidden md:flex fixed bottom-0 left-0 right-0 bg-amber-600 text-white px-4 py-3 justify-between items-center z-50">
+        <a href="tel:+15550192834" class="flex items-center space-x-2 text-amber-200 hover:text-amber-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-0.502 1.21l-2.257 1.13a11.042 11.042 0 015.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 011.684.948V19a2 2 0 01-2 2h-1C9.716 21 5 16.284 5 11V5a2 2 0 012-2z" />
+            </svg>
+            Call Now
+        </a>
+        <a href="#cost-calculator" class="bg-amber-500 text-white px-5 py-2 rounded-md hover:bg-amber-600 transition-colors">
+            Get Quote
+        </a>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Before/After Slider - FIXED
+        const sliderHandle = document.getElementById('slider-handle');
+        const afterImageContainer = document.getElementById('after-image-container');
+        let isDragging = false;
+
+        sliderHandle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = afterImageContainer.parentElement.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            const width = rect.width;
+            x = Math.max(0, Math.min(x, width));
+            const percentage = (x / width) * 100;
+            sliderHandle.style.left = `${percentage}%`;
+            afterImageContainer.style.width = `${percentage}%`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Touch support for mobile
+        sliderHandle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const rect = afterImageContainer.parentElement.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left;
+            const width = rect.width;
+            x = Math.max(0, Math.min(x, width));
+            const percentage = (x / width) * 100;
+            sliderHandle.style.left = `${percentage}%`;
+            afterImageContainer.style.width = `${percentage}%`;
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        // Cost Calculator
+        const areaSlider = document.getElementById('area-slider');
+        const areaValue = document.getElementById('area-value');
+        const costRange = document.getElementById('cost-range');
+        const calculatorForm = document.getElementById('calculator-form');
+
+        function calculateCost() {
+            const area = parseInt(areaSlider.value);
+            const projectType = document.querySelector('input[name="projectType"]:checked').value;
+            const condition = document.querySelector('input[name="condition"]:checked').value;
+
+            // Base price per sq.ft (these are example ranges)
+            let basePricePerSqFt = 0;
+            if (projectType === 'epoxy') {
+                basePricePerSqFt = condition === 'good' ? 3 : condition === 'minor' ? 4 : 5;
+            } else if (projectType === 'waterproofing') {
+                basePricePerSqFt = condition === 'good' ? 8 : condition === 'minor' ? 10 : 12;
+            } else { // both
+                basePricePerSqFt = condition === 'good' ? 10 : condition === 'minor' ? 13 : 16;
+            }
+
+            const minPrice = Math.round(area * basePricePerSqFt * 0.8); // 80% of base for range
+            const maxPrice = Math.round(area * basePricePerSqFt * 1.2); // 120% of base for range
+
+            costRange.textContent = `$${minPrice.toLocaleString()} - $${maxPrice.toLocaleString()}`;
+        }
+
+        // Update area value display
+        areaSlider.addEventListener('input', () => {
+            areaValue.textContent = areaSlider.value;
+            calculateCost();
+        });
+
+        // Recalculate when project type or condition changes
+        document.querySelectorAll('input[name="projectType"], input[name="condition"]').forEach(input => {
+            input.addEventListener('change', calculateCost);
+        });
+
+        // Initial calculation
+        calculateCost();
+
+        // Form submission (for demo, we'll just show an alert)
+        calculatorForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you shortly to schedule your on-site inspection.');
+            calculatorForm.reset();
+            calculateCost(); // Reset calculation
+        });
+
+        // Lead form submission
+        const leadForm = document.getElementById('lead-form');
+        leadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your submission! We will review your information and contact you shortly.');
+            leadForm.reset();
+        });
+
+        // FAQ Accordion - FIXED: Answers now show by default and toggle properly
+        const faqItems = [
+            { id: 1, question: document.getElementById('faq-1'), answer: document.getElementById('faq-1-answer'), icon: document.getElementById('faq-1-icon') },
+            { id: 2, question: document.getElementById('faq-2'), answer: document.getElementById('faq-2-answer'), icon: document.getElementById('faq-2-icon') },
+            { id: 3, question: document.getElementById('faq-3'), answer: document.getElementById('faq-3-answer'), icon: document.getElementById('faq-3-icon') }
+        ];
+
+        faqItems.forEach(item => {
+            item.question.addEventListener('click', () => {
+                const isOpen = item.answer.classList.contains('hidden');
+                item.answer.classList.toggle('hidden', isOpen);
+                item.icon.classList.toggle('rotate-180', isOpen);
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

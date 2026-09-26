@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoxy Flooring & Basement Waterproofing - Premium Local Service</title>
+    <!-- Tailwind CSS via CDN -->
+    <script>
+        // Restore the visitor's theme before first paint (no flash of the default colors)
+        try {
+            const saved = localStorage.getItem('epg-theme');
+            if (['aqua', 'gold', 'royal', 'emerald'].includes(saved)) document.documentElement.dataset.theme = saved;
+        } catch (e) {}
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // "brand-*" utilities read the active theme's CSS variables, so every accent follows the theme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: Object.fromEntries([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+                            .map(k => [k, `rgb(var(--brand-${k}) / <alpha-value>)`])),
+                    },
+                },
+            },
+        };
+    </script>
+    <!-- Custom CSS for any additional styles -->
+    <style>
+        /* ---------- Color themes (RGB channels so alpha can be applied) ---------- */
+        :root, :root[data-theme="aqua"] {
+            --brand-50: 236 254 255; --brand-100: 207 250 254; --brand-200: 165 243 252; --brand-300: 103 232 249; --brand-400: 34 211 238; --brand-500: 6 182 212; --brand-600: 14 116 144; --brand-700: 21 94 117; --brand-800: 22 78 99; --brand-900: 8 51 68; --brand-950: 4 30 41;
+            --ink: 5 14 24; --ink-2: 14 36 52; --on-brand: 4 30 41;
+        }
+        :root[data-theme="gold"] {
+            --brand-50: 255 251 235; --brand-100: 254 243 199; --brand-200: 253 230 138; --brand-300: 252 211 77; --brand-400: 251 191 36; --brand-500: 245 158 11; --brand-600: 217 119 6; --brand-700: 180 83 9; --brand-800: 146 64 14; --brand-900: 120 53 15; --brand-950: 69 26 3;
+            --ink: 8 9 12; --ink-2: 30 39 51; --on-brand: 28 18 3;
+        }
+        :root[data-theme="royal"] {
+            --brand-50: 245 243 255; --brand-100: 237 233 254; --brand-200: 221 214 254; --brand-300: 196 181 253; --brand-400: 167 139 250; --brand-500: 139 92 246; --brand-600: 124 58 237; --brand-700: 109 40 217; --brand-800: 91 33 182; --brand-900: 76 29 149; --brand-950: 46 16 101;
+            --ink: 12 8 26; --ink-2: 34 24 60; --on-brand: 255 255 255;
+        }
+        :root[data-theme="emerald"] {
+            --brand-50: 236 253 245; --brand-100: 209 250 229; --brand-200: 167 243 208; --brand-300: 110 231 183; --brand-400: 52 211 153; --brand-500: 16 185 129; --brand-600: 4 120 87; --brand-700: 6 95 70; --brand-800: 6 78 59; --brand-900: 2 44 34; --brand-950: 1 26 20;
+            --ink: 3 18 14; --ink-2: 12 40 32; --on-brand: 2 30 22;
+        }
+        .bg-ink { background-color: rgb(var(--ink)); }
+        .text-on-brand { color: rgb(var(--on-brand)); }
+        html.theme-fade *, html.theme-fade *::before, html.theme-fade *::after {
+            transition: background-color .6s ease, color .6s ease, border-color .6s ease, fill .6s ease, stroke .6s ease, box-shadow .6s ease !important;
+        }
+        ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+        /* Theme picker */
+        .theme-picker { position: relative; }
+        .theme-toggle {
+            display: grid; place-items: center; width: 40px; height: 40px; border-radius: 9999px;
+            background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+            transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+        }
+        .theme-toggle:hover { transform: rotate(35deg) scale(1.06); }
+        .theme-toggle:focus-visible { outline: 2px solid rgb(var(--brand-500)); outline-offset: 2px; }
+        .theme-toggle-dots {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: conic-gradient(rgb(34 211 238) 0 25%, rgb(245 158 11) 0 50%, rgb(139 92 246) 0 75%, rgb(16 185 129) 0);
+            box-shadow: 0 0 0 2px rgb(var(--ink)), 0 0 0 3px rgb(var(--brand-300));
+        }
+        .theme-menu {
+            position: absolute; right: 0; top: calc(100% + 10px); width: 220px; padding: 8px; border-radius: 14px; z-index: 60;
+            background: rgb(var(--ink-2) / .97); box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 24px 48px -12px rgba(0,0,0,.6);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            opacity: 0; transform: translateY(-6px) scale(.97); transform-origin: top right; pointer-events: none;
+            transition: opacity .2s ease, transform .25s cubic-bezier(.2,.8,.2,1);
+        }
+        .theme-picker.is-open .theme-menu { opacity: 1; transform: none; pointer-events: auto; }
+        .theme-menu p { padding: 6px 10px 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #94a3b8; }
+        .theme-option {
+            display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px 10px; border-radius: 10px;
+            font-size: 14px; font-weight: 500; color: #e2e8f0; text-align: left; transition: background-color .15s ease;
+        }
+        .theme-option:hover, .theme-option:focus-visible { background: rgba(255,255,255,.07); outline: none; }
+        .theme-option .sw { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--a), var(--b)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.1); }
+        .theme-option .check { margin-left: auto; opacity: 0; color: rgb(var(--brand-400)); transition: opacity .2s ease; }
+        .theme-option[aria-checked="true"] .check { opacity: 1; }
+
+        /* Services ticker */
+        .ticker {
+            position: relative; overflow: hidden; white-space: nowrap; padding: 15px 0;
+            background: linear-gradient(90deg, rgb(var(--brand-600)), rgb(var(--brand-500)), rgb(var(--brand-600)));
+            color: rgb(var(--on-brand));
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+                    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        }
+        .ticker-track { display: inline-flex; animation: ticker 34s linear infinite; will-change: transform; }
+        .ticker:hover .ticker-track { animation-play-state: paused; }
+        .ticker-item { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; font-size: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+        .ticker-item::after { content: "\2726"; opacity: .6; }
+        @keyframes ticker { to { transform: translateX(-50%); } }
+
+        /* Hero form: glowing rotating border */
+        @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+        .hero-form-frame {
+            position: relative; padding: 2px; border-radius: 18px;
+            background: conic-gradient(from var(--ang), rgb(var(--brand-300)), rgb(var(--brand-600) / .15) 25%, rgb(var(--brand-400)) 50%, rgb(var(--brand-600) / .15) 75%, rgb(var(--brand-300)));
+            box-shadow: 0 0 50px -12px rgb(var(--brand-500) / .6);
+            animation: frame-spin 6s linear infinite, float 6s ease-in-out infinite 1.4s;
+        }
+        .hero-form-frame:hover, .hero-form-frame:focus-within { animation-play-state: running, paused; }
+        @keyframes frame-spin { to { --ang: 360deg; } }
+
+        /* Magnetic buttons */
+        html .magnetic { transition: translate .35s cubic-bezier(.2,.8,.2,1), background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+
+        /* Back to top with scroll-progress ring */
+        .to-top {
+            position: fixed; right: 20px; bottom: 20px; z-index: 55; width: 52px; height: 52px; border-radius: 9999px;
+            display: grid; place-items: center; color: #fff; background: rgb(var(--ink) / .9);
+            box-shadow: 0 12px 28px -10px rgb(var(--ink) / .7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            opacity: 0; transform: translateY(16px) scale(.8); pointer-events: none;
+            transition: opacity .3s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+        }
+        .to-top.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+        .to-top:hover { transform: translateY(-3px); }
+        .to-top svg.progress-ring { position: absolute; inset: 0; transform: rotate(-90deg); }
+        .to-top .progress-ring circle { fill: none; stroke-width: 3; }
+        .to-top .progress-ring .track { stroke: rgba(255,255,255,.12); }
+        .to-top .progress-ring .bar { stroke: rgb(var(--brand-400)); stroke-linecap: round; stroke-dasharray: 131.95; stroke-dashoffset: 131.95; }
+        .to-top:hover .arrow { animation: nudge-up .8s ease-in-out infinite; }
+        @keyframes nudge-up { 50% { transform: translateY(-3px); } }
+        @media (min-width: 768px) { .to-top { bottom: 88px; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-track, .hero-form-frame, .to-top:hover .arrow { animation: none !important; }
+        }
+        /* ---------- Dark themed surfaces ---------- */
+        body { background-color: rgb(var(--ink)); }
+        .site-header { background: rgb(var(--ink) / .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .section-aurora {
+            position: relative; isolation: isolate; overflow: hidden; color: #fff;
+            background-color: rgb(var(--ink)); border-top: 1px solid rgba(255,255,255,.06);
+        }
+        .section-aurora--alt { background-color: rgb(var(--ink-2) / .55); }
+        .section-aurora::before {
+            content: ""; position: absolute; inset: -25%; z-index: -2; pointer-events: none; filter: blur(30px);
+            background:
+                radial-gradient(32% 28% at 18% 28%, rgb(var(--brand-500) / .22), transparent 70%),
+                radial-gradient(30% 34% at 82% 72%, rgb(var(--brand-700) / .3), transparent 70%),
+                radial-gradient(22% 22% at 62% 12%, rgb(var(--brand-300) / .12), transparent 70%);
+            animation: aurora 24s ease-in-out infinite alternate;
+        }
+        .section-aurora--alt::before { transform: scaleX(-1); animation-name: aurora-alt; animation-duration: 28s; }
+        .section-aurora::after {
+            content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.4px); background-size: 26px 26px;
+            -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent);
+                    mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent);
+            animation: grid-drift 50s linear infinite;
+        }
+        @keyframes aurora { 0% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(5%, -4%) rotate(7deg); } 100% { transform: translate(-4%, 5%) rotate(-5deg); } }
+        @keyframes aurora-alt { 0% { transform: scaleX(-1) translate(0, 0); } 50% { transform: scaleX(-1) translate(-5%, 4%) rotate(-6deg); } 100% { transform: scaleX(-1) translate(4%, -3%) rotate(5deg); } }
+        @keyframes grid-drift { to { background-position: 260px 130px; } }
+
+        /* Frosted glass cards with a cursor spotlight */
+        .glass-card {
+            background:
+                radial-gradient(320px circle at var(--mx, -400px) var(--my, -400px), rgb(var(--brand-400) / .14), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.09);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+        .svc-card.glass-card { box-shadow: none; }
+        .svc-card .flex-shrink-0 svg { filter: drop-shadow(0 0 10px rgb(var(--brand-400) / .55)); }
+        .hero-form-panel { background: linear-gradient(180deg, rgb(var(--ink-2) / .96), rgb(var(--ink) / .96)); }
+        .hero-form-panel select option { color: #111827; }
+        #cost-range { text-shadow: 0 0 24px rgb(var(--brand-400) / .45); }
+
+        /* Top bar: live dot + one-line call pill */
+        .live-dot { position: relative; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+        .live-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #fff; animation: ba-pulse 1.6s ease-out infinite; }
+        .topbar-call {
+            display: inline-flex; align-items: center; gap: 8px; padding: 3px 12px 3px 3px; border-radius: 9999px;
+            font-weight: 700; letter-spacing: .01em; color: #fff; white-space: nowrap;
+            background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,.28);
+            transition: background-color .2s ease, transform .2s ease;
+        }
+        .topbar-call:hover { background: rgba(255,255,255,.24); transform: translateY(-1px); }
+        .topbar-call-icon {
+            display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%;
+            background: #fff; color: rgb(var(--brand-700)); animation: phone-shake 2.6s ease-in-out infinite;
+        }
+        @media (max-width: 399px) { .topbar-call { padding-right: 3px; } }
+        @keyframes phone-shake { 0%, 68%, 100% { transform: rotate(0); } 72%, 80%, 88% { transform: rotate(-14deg); } 76%, 84%, 92% { transform: rotate(14deg); } }
+
+        /* Video testimonial poster */
+        .video-poster {
+            position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;
+            background:
+                radial-gradient(60% 80% at 30% 20%, rgb(var(--brand-400) / .35), transparent 60%),
+                radial-gradient(60% 80% at 80% 90%, rgb(var(--brand-700) / .5), transparent 60%),
+                linear-gradient(135deg, rgb(var(--ink-2)), rgb(var(--ink)));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+            background-size: 160% 160%; animation: poster-pan 12s ease-in-out infinite alternate;
+        }
+        @keyframes poster-pan { to { background-position: 100% 100%; } }
+        .video-play {
+            position: relative; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 9999px;
+            color: rgb(var(--on-brand)); background: rgb(var(--brand-400)); padding-left: 3px;
+            box-shadow: 0 10px 30px -8px rgb(var(--brand-500) / .8); transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+        }
+        .video-play::before, .video-play::after {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgb(var(--brand-300));
+            animation: play-pulse 2.2s ease-out infinite;
+        }
+        .video-play::after { animation-delay: 1.1s; }
+        @keyframes play-pulse { from { transform: scale(1); opacity: .8; } to { transform: scale(2); opacity: 0; } }
+        .video-poster:hover .video-play { transform: scale(1.1); }
+        .video-caption { position: absolute; left: 12px; right: 12px; bottom: 10px; font-size: 12px; color: #cbd5e1; text-align: left; }
+
+        /* Phone icon: signal waves pulse outward */
+        .phone-icon .wave { animation: phone-wave 1.8s ease-in-out infinite; }
+        .phone-icon .wave-2 { animation-delay: .3s; }
+        @keyframes phone-wave { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section-aurora::before, .section-aurora::after, .phone-icon .wave, .live-dot::after, .topbar-call-icon, .video-poster, .video-play::before, .video-play::after { animation: none !important; }
+        }
+
+        /* ---------- Page animations ---------- */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 70; pointer-events: none;
+            transform-origin: 0 50%; transform: scaleX(0);
+            background: linear-gradient(90deg, rgb(var(--brand-400)), rgb(var(--brand-500)), rgb(var(--brand-600))); box-shadow: 0 0 10px rgb(var(--brand-500) / .6);
+        }
+        header#site-header { transition: box-shadow .3s ease, background-color .3s ease; }
+        header#site-header.is-scrolled {
+            background: rgb(var(--ink) / .78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px -12px rgba(15,23,42,.25);
+        }
+
+        /* Scroll reveal: JS adds data-reveal, so content stays visible if JS never runs */
+        html [data-reveal] {
+            opacity: 0;
+            transition: opacity .7s ease var(--d, 0ms), transform .8s cubic-bezier(.2,.8,.2,1) var(--d, 0ms),
+                        border-color .3s ease, box-shadow .3s ease;
+        }
+        html [data-reveal="up"]    { transform: translateY(28px); }
+        html [data-reveal="left"]  { transform: translateX(-36px); }
+        html [data-reveal="right"] { transform: translateX(36px); }
+        html [data-reveal="zoom"]  { transform: scale(.92); }
+        html [data-reveal].is-visible { opacity: 1; transform: none; }
+
+        .title-bar::after {
+            content: ""; display: block; width: 64px; height: 4px; margin: 16px auto 0; border-radius: 4px;
+            background: linear-gradient(90deg, rgb(var(--brand-400)), rgb(var(--brand-600)));
+            transform: scaleX(0); transition: transform .8s cubic-bezier(.2,.8,.2,1) .3s;
+        }
+        .title-bar.is-visible::after { transform: scaleX(1); }
+
+        /* Hero */
+        .hero {
+            overflow: hidden; isolation: isolate; color: #fff;
+            /* fallback "image" if WebGL is unavailable */
+            background:
+                radial-gradient(60% 50% at 75% 70%, rgb(var(--brand-600) / .35), transparent 70%),
+                radial-gradient(40% 40% at 20% 90%, rgb(var(--brand-400) / .18), transparent 70%),
+                linear-gradient(180deg, rgb(var(--ink)), rgb(var(--ink-2)));
+        }
+        .hero-floor { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; opacity: 0; transition: opacity 1.2s ease; }
+        .hero-floor.is-ready { opacity: 1; }
+        .hero-shade {
+            position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                linear-gradient(90deg, rgb(var(--ink) / .9) 0%, rgb(var(--ink) / .66) 36%, rgb(var(--ink) / .12) 68%, rgb(var(--ink) / .2) 100%),
+                linear-gradient(180deg, rgb(var(--ink) / .55) 0%, transparent 30%, transparent 75%, rgb(var(--ink) / .7) 100%);
+        }
+        @media (max-width: 1023px) {
+            .hero-shade { background: linear-gradient(180deg, rgb(var(--ink) / .85) 0%, rgb(var(--ink) / .7) 55%, rgb(var(--ink) / .55) 100%); }
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 7px 14px 7px 10px;
+            border-radius: 9999px; font-size: 13px; font-weight: 500; color: rgb(var(--brand-200));
+            background: rgb(var(--brand-500) / .1); box-shadow: inset 0 0 0 1px rgb(var(--brand-400) / .35);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            animation: eyebrow-in .8s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .hero-eyebrow-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: rgb(var(--brand-400)); }
+        .hero-eyebrow-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgb(var(--brand-400)); animation: ba-pulse 1.8s ease-out infinite; }
+        @keyframes eyebrow-in { from { opacity: 0; transform: translateY(-10px); } }
+        .hero-stats > div { padding-left: 14px; border-left: 2px solid rgb(var(--brand-400) / .45); }
+        .hero-finish-tag {
+            position: absolute; right: 20px; bottom: 18px; align-items: center; gap: 8px; padding: 6px 12px;
+            border-radius: 9999px; font-size: 11.5px; letter-spacing: .02em; color: rgba(255,255,255,.75);
+            background: rgb(var(--ink) / .5); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        }
+        .hero-finish-tag::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: conic-gradient(rgb(var(--ink)), rgb(var(--brand-600)), rgb(var(--brand-200)), rgb(var(--brand-600)), rgb(var(--ink))); }
+        .hero-title .word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; }
+        .hero-title .word-inner {
+            display: inline-block; transform: translateY(110%);
+            animation: word-rise .9s cubic-bezier(.2,.8,.2,1) forwards calc(var(--i) * 70ms + 150ms);
+        }
+        .hero-accent .word-inner {
+            background: linear-gradient(90deg, rgb(var(--brand-600)), rgb(var(--brand-500)), rgb(var(--brand-400)), rgb(var(--brand-500)), rgb(var(--brand-600)));
+            background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: word-rise .9s cubic-bezier(.2,.8,.2,1) forwards calc(var(--i) * 70ms + 150ms),
+                       text-shine 4s linear infinite 1.6s;
+        }
+        @keyframes word-rise { to { transform: none; } }
+        @keyframes text-shine { to { background-position: 200% 0; } }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        #lead-form input, #lead-form select { transition: border-color .2s ease, box-shadow .2s ease; }
+        #lead-form input:focus, #lead-form select:focus { border-color: rgb(var(--brand-500)); box-shadow: 0 0 0 4px rgb(var(--brand-500) / .2); }
+
+        .cta-shine { position: relative; overflow: hidden; }
+        .cta-shine::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%);
+            transform: translateX(-120%); animation: cta-sweep 3.4s ease-in-out infinite 2s;
+        }
+        @keyframes cta-sweep { 0% { transform: translateX(-120%); } 35%, 100% { transform: translateX(120%); } }
+        #primary-cta svg { animation: nudge 1.6s ease-in-out infinite; }
+        @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+        a[href^="tel:"]:hover svg { animation: phone-ring .6s ease-in-out; }
+        @keyframes phone-ring { 0%, 100% { transform: rotate(0); } 20%, 60% { transform: rotate(-16deg); } 40%, 80% { transform: rotate(16deg); } }
+
+        /* Trust badges */
+        .trust-badge {
+            background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        html .trust-badge { transition: opacity .7s ease var(--d, 0ms), transform .5s cubic-bezier(.34,1.56,.64,1) var(--d, 0ms), box-shadow .3s ease; }
+        html .trust-badge:hover { transform: translateY(-5px); background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgb(var(--brand-400) / .5), 0 14px 28px -14px rgb(var(--brand-500) / .5); }
+        .trust-badge:hover svg { animation: spin-pop .7s cubic-bezier(.34,1.56,.64,1); }
+        @keyframes spin-pop { 0% { transform: rotate(0) scale(1); } 60% { transform: rotate(200deg) scale(1.25); } 100% { transform: rotate(360deg) scale(1); } }
+
+        /* Service cards: 3D tilt + cursor glare */
+        .svc-card { position: relative; will-change: transform; }
+        html .svc-card:hover { box-shadow: 0 24px 48px -24px rgb(var(--brand-700) / .45); }
+        html .svc-card.is-tilting { transition-duration: .7s, .15s, .3s, .3s; transition-delay: 0s; }
+        .svc-card .glare {
+            position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s ease;
+            background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--brand-400) / .2), transparent 45%);
+        }
+        .svc-card:hover .glare { opacity: 1; }
+        .svc-card:hover .flex-shrink-0 svg { animation: icon-bounce .7s ease; }
+        @keyframes icon-bounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px) rotate(-8deg); } 60% { transform: translateY(0) rotate(4deg); } }
+        .svc-card li::marker { color: rgb(var(--brand-600)); }
+
+        /* Calculator */
+        #area-slider, #cost-calculator input[type="radio"] { accent-color: rgb(var(--brand-600)); }
+        .price-pulse { display: inline-block; animation: price-pop .45s ease; }
+        @keyframes price-pop { 40% { transform: scale(1.07); color: rgb(var(--brand-700)); } }
+
+        /* Reviews */
+        .stars-anim .star { display: inline-block; opacity: .2; transform: scale(.4) rotate(-40deg); transition: opacity .3s ease, transform .5s cubic-bezier(.34,1.56,.64,1); transition-delay: calc(var(--i) * 120ms + 300ms); }
+        .stars-anim.is-lit .star { opacity: 1; transform: none; color: rgb(var(--brand-500)); }
+        html #reviews .grid > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -20px rgba(15,23,42,.35); }
+
+        /* Ripple on buttons */
+        .ripple-host { position: relative; overflow: hidden; }
+        .ripple {
+            position: absolute; border-radius: 50%; pointer-events: none; background: currentColor; opacity: .28;
+            transform: scale(0); animation: ripple .65s ease-out forwards;
+        }
+        @keyframes ripple { to { transform: scale(1); opacity: 0; } }
+
+        .faq-trigger:hover .faq-icon svg { animation: bob .9s ease-in-out infinite; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+
+        /* Footer links: underline slides in */
+        footer nav a {
+            display: block; width: fit-content; padding-bottom: 2px;
+            background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+            transition: background-size .3s ease, color .2s ease;
+        }
+        footer nav a:hover { background-size: 100% 1px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-eyebrow, .hero-eyebrow-dot::after, .cta-shine::after, #primary-cta svg, .hero-title .word-inner,
+            .trust-badge:hover svg, .svc-card:hover .flex-shrink-0 svg, a[href^="tel:"]:hover svg,
+            .faq-trigger:hover .faq-icon svg, .ripple { animation: none !important; }
+            .hero-title .word-inner { transform: none; }
+            .title-bar::after { transition: none; }
+        }
+
+        /* ---------- FAQ accordion ---------- */
+        .faq-item {
+            position: relative; overflow: hidden; border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.09);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            opacity: 0; transform: translateY(18px);
+            transition: opacity .6s ease var(--d, 0ms), transform .6s cubic-bezier(.2,.8,.2,1) var(--d, 0ms), box-shadow .3s ease, background-color .3s ease;
+        }
+        .faq-item.is-visible { opacity: 1; transform: none; }
+        .faq-item:hover { box-shadow: inset 0 0 0 1px rgb(var(--brand-400) / .45), 0 14px 30px -16px rgb(var(--brand-500) / .45); }
+        .faq-item.is-open { box-shadow: inset 0 0 0 1.5px rgb(var(--brand-400) / .8), 0 18px 40px -18px rgb(var(--brand-500) / .65); }
+        .faq-item::before {
+            content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; z-index: 1;
+            background: linear-gradient(rgb(var(--brand-300)), rgb(var(--brand-600))); transform: scaleY(0); transform-origin: top;
+            transition: transform .45s cubic-bezier(.4,0,.2,1);
+        }
+        .faq-item.is-open::before { transform: scaleY(1); }
+
+        .faq-trigger {
+            display: flex; align-items: center; gap: 16px; width: 100%; padding: 20px 24px; text-align: left;
+            font-size: 1.075rem; font-weight: 600; color: #f1f5f9; transition: color .25s ease, background-color .25s ease;
+        }
+        .faq-trigger:hover { color: rgb(var(--brand-300)); }
+        .faq-trigger:focus-visible { outline: 2px solid rgb(var(--brand-400)); outline-offset: -4px; border-radius: 16px; }
+        .faq-item.is-open .faq-trigger { color: rgb(var(--brand-300)); background: linear-gradient(90deg, rgb(var(--brand-500) / .12), transparent); }
+        .faq-num {
+            flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
+            font-size: 13px; font-weight: 700; color: rgb(var(--brand-300)); background: rgb(var(--brand-500) / .15);
+            transition: background .3s ease, color .3s ease;
+        }
+        .faq-item.is-open .faq-num { background: rgb(var(--brand-500)); color: rgb(var(--on-brand)); }
+        .faq-q { flex: 1; }
+        .faq-icon {
+            flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 9999px;
+            color: rgb(var(--brand-300)); background: rgb(var(--brand-500) / .15);
+            transition: transform .5s cubic-bezier(.34,1.56,.64,1), background .3s ease, color .3s ease;
+        }
+        .faq-trigger:hover .faq-icon { background: rgb(var(--brand-500) / .28); }
+        .faq-item.is-open .faq-icon { transform: rotate(180deg); background: rgb(var(--brand-500)); color: rgb(var(--on-brand)); }
+
+        .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.4,0,.2,1); }
+        .faq-item.is-open .faq-panel { grid-template-rows: 1fr; }
+        .faq-panel-inner { overflow: hidden; visibility: hidden; transition: visibility 0s linear .45s; }
+        .faq-item.is-open .faq-panel-inner { visibility: visible; transition-delay: 0s; }
+        .faq-panel p {
+            padding: 0 24px 22px 76px; color: #cbd5e1; line-height: 1.7;
+            opacity: 0; transform: translateY(-8px); transition: opacity .3s ease, transform .35s ease;
+        }
+        .faq-item.is-open .faq-panel p { opacity: 1; transform: none; transition-delay: .12s; }
+        .faq-cta { opacity: 0; transform: translateY(12px); transition: opacity .6s ease var(--d), transform .6s ease var(--d); }
+        .faq-cta.is-visible { opacity: 1; transform: none; }
+
+        @media (max-width: 639px) {
+            .faq-trigger { padding: 16px; gap: 12px; font-size: 1rem; }
+            .faq-num { display: none; }
+            .faq-panel p { padding: 0 16px 18px 16px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .faq-item, .faq-cta, .faq-item::before, .faq-icon, .faq-panel, .faq-panel p { transition: none; }
+            .faq-item, .faq-cta { opacity: 1; transform: none; }
+        }
+
+        /* ---------- 3D Before/After stage ---------- */
+        .ba-stage {
+            --split: 50%;
+            height: clamp(380px, 58vw, 640px);
+            background: radial-gradient(120% 90% at 30% 15%, rgb(var(--ink-2)) 0%, rgb(var(--ink)) 55%, rgb(var(--ink)) 100%);
+            touch-action: pan-y;
+            cursor: ew-resize;
+        }
+        .ba-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+        .ba-layer { position: absolute; inset: 0; pointer-events: none; }
+        .ba-layer--before { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+        .ba-layer--after  { clip-path: inset(0 0 0 var(--split)); }
+
+        .ba-tag {
+            position: absolute; top: 16px; padding: 6px 12px; border-radius: 9999px;
+            font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        }
+        .ba-tag--before { left: 16px; background: rgba(15, 23, 42, .7); color: #cbd5e1; box-shadow: inset 0 0 0 1px rgba(148,163,184,.3); }
+        .ba-tag--after  { right: 16px; background: rgb(var(--brand-500) / .92); color: rgb(var(--on-brand)); }
+
+        .ba-chips { position: absolute; bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; max-width: 46%; }
+        .ba-chips--before { left: 16px; }
+        .ba-chips--after  { right: 16px; justify-content: flex-end; }
+        .ba-chip {
+            display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
+            font-size: 12px; font-weight: 500; color: #e2e8f0; white-space: nowrap;
+            background: rgb(var(--ink) / .66); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        }
+        .ba-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+
+        .ba-hotspots { position: absolute; inset: 0; transition: opacity .4s ease; }
+        .ba-hotspots.is-hidden { opacity: 0; }
+        .ba-hotspot {
+            position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px;
+            will-change: transform; transition: opacity .3s ease;
+        }
+        .ba-hotspot .dot {
+            position: relative; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%;
+            background: var(--c); box-shadow: 0 0 0 3px rgba(255,255,255,.85);
+        }
+        .ba-hotspot .dot::after {
+            content: ""; position: absolute; inset: -3px; border-radius: 50%;
+            border: 2px solid var(--c); animation: ba-pulse 2s ease-out infinite;
+        }
+        .ba-hotspot .txt {
+            margin-top: -6px; padding: 4px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600;
+            color: #f8fafc; background: rgb(var(--ink) / .78); white-space: nowrap;
+        }
+        @keyframes ba-pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(2.6); opacity: 0; } }
+
+        .ba-divider {
+            position: absolute; top: 0; bottom: 0; left: var(--split); width: 2px; margin-left: -1px;
+            background: linear-gradient(rgb(var(--brand-300)), rgb(var(--brand-500)) 50%, rgb(var(--brand-300)));
+            box-shadow: 0 0 18px rgb(var(--brand-500) / .75); pointer-events: none;
+        }
+        .ba-handle {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 48px; height: 48px; border-radius: 9999px; display: grid; place-items: center;
+            background: rgb(var(--brand-500)); color: rgb(var(--on-brand)); pointer-events: auto; cursor: ew-resize;
+            box-shadow: 0 0 0 5px rgb(var(--brand-500) / .25), 0 10px 30px rgba(0,0,0,.5);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .ba-handle:hover, .ba-stage.is-dragging .ba-handle { transform: translate(-50%, -50%) scale(1.08); }
+        .ba-handle:focus-visible { outline: none; box-shadow: 0 0 0 5px rgba(255,255,255,.7), 0 10px 30px rgba(0,0,0,.5); }
+
+        .ba-caption {
+            position: absolute; top: 16px; left: 50%; transform: translate(-50%, -8px); opacity: 0;
+            padding: 8px 14px; border-radius: 9999px; font-size: 13px; font-weight: 600; white-space: nowrap;
+            color: #fff; background: rgb(var(--ink) / .8); box-shadow: inset 0 0 0 1px rgb(var(--brand-500) / .5);
+            transition: opacity .35s ease, transform .35s ease; pointer-events: none;
+        }
+        .ba-caption.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+        .ba-loader {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 12px;
+            color: #94a3b8; font-size: 14px; transition: opacity .6s ease;
+        }
+        .ba-loader.is-done { opacity: 0; pointer-events: none; }
+        .ba-stage:has(.ba-loader:not(.is-done)) .ba-divider { opacity: 0; }
+        .ba-divider { transition: opacity .5s ease; }
+        .ba-spinner {
+            width: 22px; height: 22px; border-radius: 50%; border: 3px solid rgb(var(--brand-500) / .25);
+            border-top-color: rgb(var(--brand-500)); animation: ba-spin .8s linear infinite;
+        }
+        @keyframes ba-spin { to { transform: rotate(360deg); } }
+
+        .ba-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px;
+            font-size: 14px; font-weight: 600; color: #e2e8f0; background: rgba(255,255,255,.06);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); transition: background .2s ease;
+        }
+        .ba-btn:hover { background: rgba(255,255,255,.12); }
+        .ba-btn--primary { background: rgb(var(--brand-500)); color: rgb(var(--on-brand)); box-shadow: none; }
+        .ba-btn--primary:hover { background: rgb(var(--brand-400)); }
+        .ba-btn-dot { width: 8px; height: 8px; border-radius: 50%; background: #475569; transition: background .2s ease; }
+        .ba-btn[aria-pressed="true"] .ba-btn-dot { background: #34d399; box-shadow: 0 0 8px #34d399; }
+
+        .ba-swatch {
+            width: 34px; height: 34px; border-radius: 9999px;
+            background: conic-gradient(from 200deg, var(--a), var(--b), var(--c), var(--b), var(--a));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15); transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .ba-swatch:hover { transform: scale(1.08); }
+        .ba-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px rgb(var(--ink)), 0 0 0 4px rgb(var(--brand-500)); }
+
+        @media (max-width: 639px) {
+            .ba-hotspot .txt { display: none; }
+            .ba-chips { max-width: 48%; }
+            .ba-caption { font-size: 11.5px; top: 56px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .ba-hotspot .dot::after { animation: none; }
+        }
+    </style>
+</head>
+<body class="bg-ink text-slate-100 antialiased">
+    <!-- Top Announcement Bar -->
+    <div class="topbar bg-brand-600 text-white px-4 py-2 text-sm flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="truncate"><strong class="font-semibold">24/7</strong> Emergency Waterproofing</span>
+        </div>
+        <div class="hidden md:flex items-center gap-1.5 text-white/85">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            Serving Austin, TX &amp; Surrounding Areas
+        </div>
+        <div class="flex items-center gap-2 flex-none">
+            <a href="tel:+15550192834" class="topbar-call" aria-label="Call (555) 019-2834">
+                <span class="topbar-call-icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 phone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/><path class="wave wave-1" d="M14.05 6A5 5 0 0 1 18 10"/><path class="wave wave-2" d="M14.05 2a9 9 0 0 1 8 7.94"/></svg></span>
+                <span class="hidden min-[400px]:inline whitespace-nowrap">(555) 019-2834</span>
+            </a>
+            <button id="mobile-menu-button" type="button" class="md:hidden p-1.5 rounded-lg hover:bg-white/15" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-600">
+        <nav class="px-4 py-3 space-y-2">
+            <a href="#services" class="block text-brand-200 hover:text-brand-100 px-3 py-2 rounded">Services</a>
+            <a href="#before-after" class="block text-brand-200 hover:text-brand-100 px-3 py-2 rounded">Before/After</a>
+            <a href="#cost-calculator" class="block text-brand-200 hover:text-brand-100 px-3 py-2 rounded">Cost Calculator</a>
+            <a href="#reviews" class="block text-brand-200 hover:text-brand-100 px-3 py-2 rounded">Reviews</a>
+            <a href="#about" class="block text-brand-200 hover:text-brand-100 px-3 py-2 rounded">About</a>
+            <a href="#" class="block bg-brand-500 text-white px-3 py-2 rounded">Get Free Quote</a>
+        </nav>
+    </div>
+
+    <!-- Sticky Header -->
+    <header id="site-header" class="site-header border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 h-16">
+            <div class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10 text-brand-400 flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                </svg>
+                <span class="font-bold text-base min-[400px]:text-lg sm:text-xl text-white whitespace-nowrap">EpoxyGuard Pros</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#services" class="text-slate-300 hover:text-white font-medium">Services</a>
+                <a href="#before-after" class="text-slate-300 hover:text-white font-medium">Before/After</a>
+                <a href="#cost-calculator" class="text-slate-300 hover:text-white font-medium">Cost Calculator</a>
+                <a href="#reviews" class="text-slate-300 hover:text-white font-medium">Reviews</a>
+                <a href="#about" class="text-slate-300 hover:text-white font-medium">About</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <div class="theme-picker" id="theme-picker">
+                    <button type="button" id="theme-toggle" class="theme-toggle" aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu" aria-label="Change color theme" title="Change color theme">
+                        <span class="theme-toggle-dots"></span>
+                    </button>
+                    <div id="theme-menu" class="theme-menu" role="menu" aria-label="Color theme">
+                        <p>Color theme</p>
+                        <button type="button" class="theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="aqua">
+                            <span class="sw" style="--a:#22d3ee;--b:#0e7490"></span>Aqua Shield
+                            <svg class="check h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="gold">
+                            <span class="sw" style="--a:#fbbf24;--b:#d97706"></span>Classic Gold
+                            <svg class="check h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="royal">
+                            <span class="sw" style="--a:#a78bfa;--b:#7c3aed"></span>Royal Violet
+                            <svg class="check h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" aria-checked="false" data-theme-choice="emerald">
+                            <span class="sw" style="--a:#34d399;--b:#047857"></span>Evergreen
+                            <svg class="check h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <a href="#cost-calculator" class="magnetic bg-brand-600 text-white px-3 sm:px-5 py-2 text-sm sm:text-base rounded-md hover:bg-brand-700 transition-colors whitespace-nowrap">
+                    Get Free Quote
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero relative py-16 lg:py-24">
+        <!-- Main image: live metallic-epoxy floor rendered in WebGL (CSS gradient fallback underneath) -->
+        <canvas id="hero-floor" class="hero-floor" aria-hidden="true"></canvas>
+        <div class="hero-shade" aria-hidden="true"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+                <div class="hero-copy">
+                    <div class="hero-eyebrow">
+                        <span class="hero-eyebrow-dot"></span>
+                        Rated 4.9/5 &middot; Austin&rsquo;s epoxy &amp; waterproofing specialists
+                    </div>
+                    <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-[1.08] tracking-tight">
+                        Protect Your Basement. <span class="hero-accent">Elevate Your Floors.</span>
+                    </h1>
+                    <p class="text-lg text-slate-300 mb-8 max-w-xl">
+                        Commercial-grade Epoxy Flooring &amp; Lifetime-Guaranteed Basement Waterproofing. Built to last a lifetime.
+                    </p>
+                    <div class="hero-actions flex flex-wrap gap-4">
+                        <a href="#cost-calculator" id="primary-cta" class="magnetic bg-brand-500 text-on-brand px-6 py-3.5 rounded-lg hover:bg-brand-400 transition-colors font-semibold inline-flex items-center gap-2 shadow-lg shadow-brand-500/25">
+                            Get Instant Quote (Takes 60 Seconds)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                        <a href="tel:+15550192834" class="border border-white/25 text-white px-6 py-3.5 rounded-lg hover:bg-white/10 hover:border-brand-400 transition-colors inline-flex items-center gap-2 font-medium backdrop-blur-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-400 phone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/><path class="wave wave-1" d="M14.05 6A5 5 0 0 1 18 10"/><path class="wave wave-2" d="M14.05 2a9 9 0 0 1 8 7.94"/></svg>
+                            Call (555) 019-2834
+                        </a>
+                    </div>
+                    <dl class="hero-stats mt-10 grid grid-cols-3 gap-4 max-w-lg">
+                        <div><dt class="text-xs uppercase tracking-wider text-slate-400">Experience</dt><dd class="text-2xl sm:text-3xl font-bold text-white"><span data-count="20">20</span>+ yrs</dd></div>
+                        <div><dt class="text-xs uppercase tracking-wider text-slate-400">5-star reviews</dt><dd class="text-2xl sm:text-3xl font-bold text-white"><span data-count="500">500</span>+</dd></div>
+                        <div><dt class="text-xs uppercase tracking-wider text-slate-400">Warranty</dt><dd class="text-2xl sm:text-3xl font-bold text-brand-400">Lifetime</dd></div>
+                    </dl>
+                </div>
+                <div class="hero-form-wrap mt-12 lg:mt-0">
+                    <!-- Lead Capture Form Floating Box -->
+                    <div class="hero-form-frame w-full max-w-sm lg:ml-auto">
+                    <div class="hero-form hero-form-panel text-white rounded-2xl shadow-2xl shadow-black/40 p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Get Your Free Quote in 3 Simple Steps</h2>
+                        <form id="lead-form" class="space-y-4">
+                            <!-- Step 1: Service Needed -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-200 mb-1">What service do you need?</label>
+                                <select class="w-full px-3 py-2 border border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-md focus:outline-none focus:ring-brand-500 focus:border-brand-500">
+                                    <option value="">Select Service</option>
+                                    <option value="epoxy">Metallic & Decorative Epoxy Flooring</option>
+                                    <option value="waterproofing">Basement Waterproofing</option>
+                                    <option value="both">Both Epoxy & Waterproofing</option>
+                                </select>
+                            </div>
+                            <!-- Step 2: Area & Zip -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-200 mb-1">Area Size (sq.ft)</label>
+                                    <input type="number" min="100" class="w-full px-3 py-2 border border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-md focus:outline-none focus:ring-brand-500 focus:border-brand-500" placeholder="e.g., 500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-200 mb-1">Zip Code</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-md focus:outline-none focus:ring-brand-500 focus:border-brand-500" placeholder="e.g., 78701">
+                                </div>
+                            </div>
+                            <!-- Step 3: Contact Info -->
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-200 mb-1">Your Name</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-md focus:outline-none focus:ring-brand-500 focus:border-brand-500" placeholder="First Last">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-200 mb-1">Phone Number</label>
+                                    <input type="tel" class="w-full px-3 py-2 border border-white/15 bg-white/5 text-white placeholder:text-slate-500 rounded-md focus:outline-none focus:ring-brand-500 focus:border-brand-500" placeholder="(555) 123-4567">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-600 text-white px-5 py-3 rounded-md hover:bg-brand-700 transition-colors font-medium mt-2">
+                                Get My Free Quote
+                            </button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="hero-badges max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-14">
+            <div class="trust-badge flex items-center gap-2 px-4 py-3 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span class="text-sm font-medium text-white">Licensed &amp; Insured</span>
+            </div>
+            <div class="trust-badge flex items-center gap-2 px-4 py-3 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.34l5.52.44c.5.04.7.66.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.28 5.38a.56.56 0 01-.84.61l-4.73-2.89a.56.56 0 00-.58 0l-4.73 2.89a.56.56 0 01-.84-.61l1.28-5.38a.56.56 0 00-.18-.56l-4.2-3.6a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.47-.34l2.13-5.11z" />
+                </svg>
+                <span class="text-sm font-medium text-white">500+ 5-Star Reviews</span>
+            </div>
+            <div class="trust-badge flex items-center gap-2 px-4 py-3 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15a6 6 0 100-12 6 6 0 000 12zm0 0l-3.5 6L9 17l-3 .5L9.2 12M12 15l3.5 6-.5-4 3 .5-3.2-5.5" />
+                </svg>
+                <span class="text-sm font-medium text-white">Lifetime Warranty</span>
+            </div>
+            <div class="trust-badge flex items-center gap-2 px-4 py-3 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h2m4 0h4M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
+                </svg>
+                <span class="text-sm font-medium text-white">0% Financing Available</span>
+            </div>
+        </div>
+
+        <span id="hero-finish-tag" class="hero-finish-tag hidden md:inline-flex" aria-hidden="true">Shown: Glacier Teal metallic epoxy</span>
+    </section>
+
+    <!-- Services ticker -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track"><span class="ticker-item">Metallic Epoxy</span><span class="ticker-item">Basement Waterproofing</span><span class="ticker-item">Garage Floor Coatings</span><span class="ticker-item">Sump Pump Installation</span><span class="ticker-item">Crack Injection</span><span class="ticker-item">Commercial Coatings</span><span class="ticker-item">Lifetime Warranty</span><span class="ticker-item">24/7 Emergency Service</span><span class="ticker-item">Metallic Epoxy</span><span class="ticker-item">Basement Waterproofing</span><span class="ticker-item">Garage Floor Coatings</span><span class="ticker-item">Sump Pump Installation</span><span class="ticker-item">Crack Injection</span><span class="ticker-item">Commercial Coatings</span><span class="ticker-item">Lifetime Warranty</span><span class="ticker-item">24/7 Emergency Service</span></div>
+    </div>
+
+    <!-- Service Dual-Toggle / Dual Card Section -->
+    <section id="services" class="section-aurora py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Our Core Services</h2>
+            <div class="grid gap-8 md:grid-cols-2">
+                <!-- Epoxy Flooring Card -->
+                <div class="svc-card glass-card p-6 rounded-xl border border-white/10 hover:border-brand-500 transition-colors">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Metallic & Decorative Epoxy Flooring</h3>
+                            <p class="text-slate-300 mb-4">Transform your garage, patio, or commercial space with high-gloss, durable epoxy coatings that resist chemicals, stains, and wear.</p>
+                            <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
+                                <li>High-gloss finish available in multiple colors</li>
+                                <li>Chemical and stain resistant</li>
+                                <li>Seamless and easy to clean</li>
+                                <li>15-year residential warranty</li>
+                                <li>Anti-slip additives available</li>
+                            </ul>
+                            <a href="#cost-calculator" class="bg-brand-600 text-white px-5 py-2 rounded-md hover:bg-brand-700 transition-colors w-full text-center">
+                                Request Free Estimate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Basement Waterproofing Card -->
+                <div class="svc-card glass-card p-6 rounded-xl border border-white/10 hover:border-brand-500 transition-colors">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Heavy-Duty Basement Waterproofing</h3>
+                            <p class="text-slate-300 mb-4">Protect your home from water damage with interior drain tile systems, sump pumps, and wall crack repair solutions.</p>
+                            <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
+                                <li>Interior drain tile systems</li>
+                                <li>Sump pump installation and backup</li>
+                                <li>Wall crack and joint repair</li>
+                                <li>Lifetime transferable warranty</li>
+                                <li>Mold and mildew prevention</li>
+                            </ul>
+                            <a href="#cost-calculator" class="bg-brand-600 text-white px-5 py-2 rounded-md hover:bg-brand-700 transition-colors w-full text-center">
+                                Request Free Estimate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 3D Before/After (Three.js) -->
+    <section id="before-after" class="py-20 bg-ink text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="text-brand-400 font-semibold tracking-widest text-xs uppercase mb-3">Interactive 3D Before &amp; After</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">See the Transformation</h2>
+                <p class="text-slate-400">Drag across the basement to compare a damp, cracked slab with a sealed, waterproofed space finished in seamless metallic epoxy.</p>
+            </div>
+
+            <div id="ba-stage" class="ba-stage relative w-full rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl select-none">
+                <canvas id="ba-canvas" aria-hidden="true"></canvas>
+
+                <!-- BEFORE overlay (clipped to the left of the divider) -->
+                <div class="ba-layer ba-layer--before">
+                    <span class="ba-tag ba-tag--before">Before</span>
+                    <div class="ba-chips ba-chips--before">
+                        <span class="ba-chip"><i style="--c:#60a5fa"></i>82% humidity</span>
+                        <span class="ba-chip"><i style="--c:#f87171"></i>2 active leaks</span>
+                        <span class="ba-chip hidden sm:inline-flex"><i style="--c:#f87171"></i>Cracked, stained slab</span>
+                    </div>
+                    <div class="ba-hotspots" data-side="before"></div>
+                </div>
+
+                <!-- AFTER overlay (clipped to the right of the divider) -->
+                <div class="ba-layer ba-layer--after">
+                    <span class="ba-tag ba-tag--after">After</span>
+                    <div class="ba-chips ba-chips--after">
+                        <span class="ba-chip hidden sm:inline-flex"><i style="--c:rgb(var(--brand-400))"></i>Seamless metallic epoxy</span>
+                        <span class="ba-chip"><i style="--c:#34d399"></i>0 leaks</span>
+                        <span class="ba-chip"><i style="--c:#34d399"></i>45% humidity</span>
+                    </div>
+                    <div class="ba-hotspots" data-side="after"></div>
+                </div>
+
+                <div id="ba-caption" class="ba-caption" aria-live="polite"></div>
+
+                <div class="ba-divider">
+                    <button id="ba-handle" class="ba-handle" type="button" role="slider"
+                            aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+
+                <div id="ba-loader" class="ba-loader">
+                    <span class="ba-spinner"></span>
+                    <span>Building 3D basement&hellip;</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="mt-6 flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+                <div class="flex flex-wrap gap-3">
+                    <button id="ba-auto" type="button" aria-pressed="true" class="ba-btn">
+                        <span class="ba-btn-dot"></span>Auto-compare
+                    </button>
+                    <button id="ba-replay" type="button" class="magnetic ba-btn ba-btn--primary">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                        Replay installation
+                    </button>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="text-sm text-slate-400">Preview epoxy finish:</span>
+                    <div class="flex gap-2" role="radiogroup" aria-label="Epoxy finish">
+                        <button type="button" class="ba-swatch" role="radio" aria-checked="true" data-palette="gold" title="Midnight Gold" style="--a:#101217;--b:#b98f3e;--c:#f7dc92"><span class="sr-only">Midnight Gold</span></button>
+                        <button type="button" class="ba-swatch" role="radio" aria-checked="false" data-palette="silver" title="Glacier Silver" style="--a:#161c24;--b:#6b7a8a;--c:#e6edf3"><span class="sr-only">Glacier Silver</span></button>
+                        <button type="button" class="ba-swatch" role="radio" aria-checked="false" data-palette="copper" title="Copper Lava" style="--a:#150b08;--b:#b85c2c;--c:#ffbf85"><span class="sr-only">Copper Lava</span></button>
+                    </div>
+                    <span id="ba-palette-name" class="text-sm font-medium text-brand-300">Midnight Gold</span>
+                </div>
+            </div>
+
+            <!-- Outcome stats -->
+            <div class="mt-10 grid gap-4 sm:grid-cols-3">
+                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-5">
+                    <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Relative humidity</p>
+                    <p class="text-2xl font-bold"><span class="text-red-400">82%</span> <span class="text-slate-500">&rarr;</span> <span class="text-emerald-400">45%</span></p>
+                </div>
+                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-5">
+                    <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Typical epoxy install</p>
+                    <p class="text-2xl font-bold">1&ndash;2 days</p>
+                </div>
+                <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-5">
+                    <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Waterproofing warranty</p>
+                    <p class="text-2xl font-bold text-brand-400">Lifetime, transferable</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instant Cost Calculator -->
+    <section id="cost-calculator" class="section-aurora section-aurora--alt py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Instant Cost Estimate</h2>
+            <p class="text-center text-slate-300 mb-12 max-w-2xl mx-auto">
+                Get an instant price range for your epoxy flooring or basement waterproofing project in seconds.
+            </p>
+            <div class="glass-card p-8 rounded-xl">
+                <form id="calculator-form" class="space-y-6">
+                    <!-- Project Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">Project Type</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="epoxy" checked class="h-4 w-4 text-brand-400">
+                                <span>Epoxy Flooring</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="waterproofing" class="h-4 w-4 text-brand-400">
+                                <span>Basement Waterproofing</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="projectType" value="both" class="h-4 w-4 text-brand-400">
+                                <span>Both</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Area Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">Area Size (sq.ft)</label>
+                        <div class="flex items-center">
+                            <input type="range" id="area-slider" min="200" max="3000" value="500" class="w-full h-2 bg-white/10 rounded-full">
+                            <span id="area-value" class="ml-4 text-brand-400 font-medium min-w-[4ch]">500</span> sq.ft
+                        </div>
+                    </div>
+                    <!-- Floor Condition -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">Floor Condition</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="good" checked class="h-4 w-4 text-brand-400">
+                                <span>Good</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="minor" class="h-4 w-4 text-brand-400">
+                                <span>Minor Cracks</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="condition" value="severe" class="h-4 w-4 text-brand-400">
+                                <span>Severe Water Damage</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Estimated Cost -->
+                    <div class="pt-4 border-t border-white/10">
+                        <h3 class="text-lg font-bold text-white mb-2">Estimated Cost Range</h3>
+                        <p class="text-2xl font-bold text-brand-400" id="cost-range">$1,500 - $3,000</p>
+                        <p class="text-sm text-slate-400 mt-2">*Final price determined after on-site inspection</p>
+                        <button type="submit" class="w-full mt-6 bg-brand-600 text-white px-5 py-3 rounded-md hover:bg-brand-700 transition-colors font-medium">
+                            Lock in Your Discount Rate & Schedule On-Site Inspection
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof & Reviews Section -->
+    <section id="reviews" class="section-aurora py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-white mb-12">Trusted by Homeowners & Businesses</h2>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Google Review Badge -->
+                <div class="glass-card p-6 rounded-xl text-center shadow-lg shadow-black/20">
+                    <div class="flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                        </svg>
+                        <span>Google Reviews</span>
+                    </div>
+                    <div id="rating-count" class="text-3xl font-bold text-brand-400 mb-2">4.9</div>
+                    <p class="text-slate-300"><span id="rating-stars" role="img" aria-label="5 out of 5 stars"><span class="star" aria-hidden="true" style="--i:0">★</span><span class="star" aria-hidden="true" style="--i:1">★</span><span class="star" aria-hidden="true" style="--i:2">★</span><span class="star" aria-hidden="true" style="--i:3">★</span><span class="star" aria-hidden="true" style="--i:4">★</span></span> (320+ reviews)</p>
+                </div>
+                <!-- Video Testimonial Placeholder -->
+                <div class="glass-card p-6 rounded-xl shadow-lg shadow-black/20">
+                    <h3 class="text-lg font-bold text-white mb-4">Video Testimonials</h3>
+                    <button type="button" class="video-poster" aria-label="Play customer video testimonial (coming soon)">
+                        <span class="video-play"><svg viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+                        <span class="video-caption">&ldquo;Our basement is finally dry.&rdquo; &mdash; Sarah M., Round Rock</span>
+                    </button>
+                </div>
+                <!-- Customer Quote -->
+                <div class="glass-card p-6 rounded-xl shadow-lg shadow-black/20">
+                    <h3 class="text-lg font-bold text-white mb-4">Customer Quote</h3>
+                    <p class="italic text-slate-300 mb-4">"EpoxyGuard Pros transformed our basement from a damp, unusable space into a beautiful, dry living area. The team was professional, and the lifetime warranty gives us peace of mind."</p>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60"
+                             alt="John D."
+                             class="h-10 w-10 rounded-full">
+                        <div>
+                            <p class="font-medium text-white">John D., Austin, TX</p>
+                            <p class="text-sm text-slate-400">Basement Waterproofing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs & Edu-Section -->
+    <section id="faq" class="faq-section section-aurora section-aurora--alt py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <p class="text-brand-400 font-semibold tracking-widest text-xs uppercase mb-3">Got questions?</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Frequently Asked Questions</h2>
+            </div>
+            <div class="space-y-4">
+                <!-- Accordion Item 1 -->
+                <div class="faq-item is-open" data-faq style="--d:0ms">
+                    <h3>
+                        <button type="button" class="faq-trigger" id="faq-1" aria-expanded="true" aria-controls="faq-1-panel">
+                            <span class="faq-num">01</span>
+                            <span class="faq-q">How long does epoxy flooring installation take?</span>
+                            <span class="faq-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="faq-panel" id="faq-1-panel" role="region" aria-labelledby="faq-1">
+                        <div class="faq-panel-inner">
+                            <p>Most residential epoxy flooring projects are completed in 1-2 days. The process includes surface preparation, primer application, epoxy coating, and top seal. Larger commercial projects may take longer depending on size and complexity.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion Item 2 -->
+                <div class="faq-item" data-faq style="--d:110ms">
+                    <h3>
+                        <button type="button" class="faq-trigger" id="faq-2" aria-expanded="false" aria-controls="faq-2-panel">
+                            <span class="faq-num">02</span>
+                            <span class="faq-q">Does basement waterproofing come with a warranty?</span>
+                            <span class="faq-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="faq-panel" id="faq-2-panel" role="region" aria-labelledby="faq-2">
+                        <div class="faq-panel-inner">
+                            <p>Yes! Our basement waterproofing systems come with a lifetime transferable warranty that covers both parts and labor. This warranty is backed by our 20+ years of experience and is designed to give you long-term peace of mind.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion Item 3 -->
+                <div class="faq-item" data-faq style="--d:220ms">
+                    <h3>
+                        <button type="button" class="faq-trigger" id="faq-3" aria-expanded="false" aria-controls="faq-3-panel">
+                            <span class="faq-num">03</span>
+                            <span class="faq-q">What options do I have if my basement is actively flooding?</span>
+                            <span class="faq-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="faq-panel" id="faq-3-panel" role="region" aria-labelledby="faq-3">
+                        <div class="faq-panel-inner">
+                            <p>For active flooding, we recommend an immediate emergency response. We offer 24/7 emergency waterproofing services that include interior drainage systems, sump pump installation, and water extraction to stop the flooding and prevent further damage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="faq-cta text-center text-slate-300 mt-10" style="--d:360ms">
+                Still have questions?
+                <a href="tel:+15550192834" class="font-semibold text-brand-300 hover:text-brand-200 underline decoration-brand-400/60 underline-offset-4">Call (555) 019-2834</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold text-brand-400 mb-4">EpoxyGuard Pros</h3>
+                    <p class="text-sm">Licensed & Insured Contractor<br>License #: TX-123456789</p>
+                    <p class="text-sm mt-2">123 Contractor Drive<br>Austin, TX 78701</p>
+                    <p class="text-sm mt-2">Mon-Fri: 8AM-6PM | Sat: 9AM-3PM</p>
+                </div>
+                <!-- Services -->
+                <div>
+                    <h3 class="text-xl font-bold text-brand-400 mb-4">Our Services</h3>
+                    <nav class="space-y-2">
+                        <a href="#services" class="hover:text-brand-200 transition-colors">Epoxy Flooring</a>
+                        <a href="#services" class="hover:text-brand-200 transition-colors">Basement Waterproofing</a>
+                        <a href="#services" class="hover:text-brand-200 transition-colors">Concrete Repair</a>
+                        <a href="#services" class="hover:text-brand-200 transition-colors">Garage Floor Coatings</a>
+                    </nav>
+                </div>
+                <!-- Resources -->
+                <div>
+                    <h3 class="text-xl font-bold text-brand-400 mb-4">Resources</h3>
+                    <nav class="space-y-2">
+                        <a href="#cost-calculator" class="hover:text-brand-200 transition-colors">Cost Calculator</a>
+                        <a href="#before-after" class="hover:text-brand-200 transition-colors">Before/After Gallery</a>
+                        <a href="#faq" class="hover:text-brand-200 transition-colors">FAQs</a>
+                        <a href="#" class="hover:text-brand-200 transition-colors">Blog</a>
+                    </nav>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold text-brand-400 mb-4">Contact Us</h3>
+                    <p class="text-sm flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-400 phone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/><path class="wave wave-1" d="M14.05 6A5 5 0 0 1 18 10"/><path class="wave wave-2" d="M14.05 2a9 9 0 0 1 8 7.94"/></svg>
+                        <span>(555) 019-2834</span>
+                    </p>
+                    <p class="text-sm flex items-center space-x-2 mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                        <span>info@epoxyguardpros.com</span>
+                    </p>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-gray-800 text-center text-sm">
+                &copy; 2026 EpoxyGuard Pros. All rights reserved. | <a href="#" class="text-brand-400 hover:text-brand-300">Privacy Policy</a> | <a href="#" class="text-brand-400 hover:text-brand-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA Bar (Hidden on desktop) -->
+    <div class="hidden md:flex fixed bottom-0 left-0 right-0 bg-brand-600 text-white px-4 py-3 justify-between items-center z-50">
+        <a href="tel:+15550192834" class="flex items-center space-x-2 text-brand-200 hover:text-brand-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 phone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/><path class="wave wave-1" d="M14.05 6A5 5 0 0 1 18 10"/><path class="wave wave-2" d="M14.05 2a9 9 0 0 1 8 7.94"/></svg>
+            Call Now
+        </a>
+        <a href="#cost-calculator" class="bg-brand-500 text-white px-5 py-2 rounded-md hover:bg-brand-600 transition-colors">
+            Get Quote
+        </a>
+    </div>
+
+    <script>
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const open = document.getElementById('mobile-menu').classList.toggle('hidden') === false;
+            this.setAttribute('aria-expanded', String(open));
+        });
+
+        // Cost Calculator
+        const areaSlider = document.getElementById('area-slider');
+        const areaValue = document.getElementById('area-value');
+        const costRange = document.getElementById('cost-range');
+        const calculatorForm = document.getElementById('calculator-form');
+
+        // Tween the displayed price range toward the new numbers
+        let shownMin = 0, shownMax = 0, priceFrame = 0;
+        const formatPrice = (n) => `$${Math.round(n).toLocaleString()}`;
+        costRange.addEventListener('animationend', () => costRange.classList.remove('price-pulse'));
+        function showPrice(minPrice, maxPrice) {
+            cancelAnimationFrame(priceFrame);
+            if (prefersReducedMotion) {
+                shownMin = minPrice; shownMax = maxPrice;
+                costRange.textContent = `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`;
+                return;
+            }
+            const fromMin = shownMin, fromMax = shownMax, t0 = performance.now();
+            const step = (now) => {
+                const k = Math.min(1, (now - t0) / 450), e = 1 - Math.pow(1 - k, 3);
+                shownMin = fromMin + (minPrice - fromMin) * e;
+                shownMax = fromMax + (maxPrice - fromMax) * e;
+                costRange.textContent = `${formatPrice(shownMin)} - ${formatPrice(shownMax)}`;
+                if (k < 1) priceFrame = requestAnimationFrame(step);
+            };
+            priceFrame = requestAnimationFrame(step);
+            costRange.classList.add('price-pulse');
+        }
+
+        function calculateCost() {
+            const area = parseInt(areaSlider.value);
+            const projectType = document.querySelector('input[name="projectType"]:checked').value;
+            const condition = document.querySelector('input[name="condition"]:checked').value;
+
+            // Base price per sq.ft (these are example ranges)
+            let basePricePerSqFt = 0;
+            if (projectType === 'epoxy') {
+                basePricePerSqFt = condition === 'good' ? 3 : condition === 'minor' ? 4 : 5;
+            } else if (projectType === 'waterproofing') {
+                basePricePerSqFt = condition === 'good' ? 8 : condition === 'minor' ? 10 : 12;
+            } else { // both
+                basePricePerSqFt = condition === 'good' ? 10 : condition === 'minor' ? 13 : 16;
+            }
+
+            const minPrice = Math.round(area * basePricePerSqFt * 0.8); // 80% of base for range
+            const maxPrice = Math.round(area * basePricePerSqFt * 1.2); // 120% of base for range
+
+            showPrice(minPrice, maxPrice);
+        }
+
+        // Update area value display
+        areaSlider.addEventListener('input', () => {
+            areaValue.textContent = areaSlider.value;
+            calculateCost();
+        });
+
+        // Recalculate when project type or condition changes
+        document.querySelectorAll('input[name="projectType"], input[name="condition"]').forEach(input => {
+            input.addEventListener('change', calculateCost);
+        });
+
+        // Initial calculation
+        calculateCost();
+
+        // Form submission (for demo, we'll just show an alert)
+        calculatorForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you shortly to schedule your on-site inspection.');
+            calculatorForm.reset();
+            calculateCost(); // Reset calculation
+        });
+
+        // Lead form submission
+        const leadForm = document.getElementById('lead-form');
+        leadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your submission! We will review your information and contact you shortly.');
+            leadForm.reset();
+        });
+
+        // FAQ Accordion: one item open at a time; height animates via CSS grid rows
+        const faqItems = document.querySelectorAll('[data-faq]');
+        const setFaq = (item, open) => {
+            item.classList.toggle('is-open', open);
+            item.querySelector('.faq-trigger').setAttribute('aria-expanded', String(open));
+        };
+        faqItems.forEach(item => {
+            item.querySelector('.faq-trigger').addEventListener('click', () => {
+                const open = !item.classList.contains('is-open');
+                faqItems.forEach(other => setFaq(other, other === item ? open : false));
+            });
+        });
+
+        // Staggered fade-up as the FAQ scrolls into view
+        const faqReveal = document.querySelectorAll('.faq-item, .faq-cta');
+        if ('IntersectionObserver' in window) {
+            const faqObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('is-visible'); faqObserver.unobserve(e.target); }
+                });
+            }, { threshold: 0.15 });
+            faqReveal.forEach(el => faqObserver.observe(el));
+        } else {
+            faqReveal.forEach(el => el.classList.add('is-visible'));
+        }
+
+        // ---------- Page animations ----------
+
+        // Scroll progress bar + header elevation
+        const scrollBar = document.createElement('div');
+        scrollBar.className = 'scroll-progress';
+        document.body.appendChild(scrollBar);
+        const siteHeader = document.getElementById('site-header');
+        let scrollQueued = false;
+        const onScroll = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            scrollBar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+            siteHeader.classList.toggle('is-scrolled', window.scrollY > 10);
+            scrollQueued = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(onScroll); }
+        }, { passive: true });
+        onScroll();
+
+        // Hero headline: wrap each word so it can rise into place
+        function splitWords(el) {
+            let i = 0;
+            const walk = (node) => {
+                [...node.childNodes].forEach(child => {
+                    if (child.nodeType === Node.ELEMENT_NODE) return walk(child);
+                    if (child.nodeType !== Node.TEXT_NODE) return;
+                    const frag = document.createDocumentFragment();
+                    child.textContent.split(/(\s+)/).forEach(part => {
+                        if (!part) return;
+                        if (!part.trim()) { frag.appendChild(document.createTextNode(' ')); return; }
+                        const word = document.createElement('span');
+                        const inner = document.createElement('span');
+                        word.className = 'word';
+                        inner.className = 'word-inner';
+                        inner.style.setProperty('--i', i++);
+                        inner.textContent = part;
+                        word.appendChild(inner);
+                        frag.appendChild(word);
+                    });
+                    child.replaceWith(frag);
+                });
+            };
+            walk(el);
+        }
+        if (!prefersReducedMotion) splitWords(document.querySelector('.hero-title'));
+
+        // Section titles get an accent bar that draws in
+        document.querySelectorAll('section:not(.hero) h2').forEach(h => {
+            if (h.classList.contains('text-center') || h.parentElement.classList.contains('text-center')) h.classList.add('title-bar');
+        });
+
+        // Scroll reveal: [selector, type, stagger step (ms), base delay (ms)]
+        const revealGroups = [
+            ['section:not(.hero) h2', 'up'],
+            ['.hero-copy > p', 'up', 0, 650],
+            ['.hero-copy > .hero-actions', 'up', 0, 790],
+            ['.hero-copy > .hero-stats', 'up', 0, 930],
+            ['.hero-form-wrap', 'right', 0, 350],
+            ['.trust-badge', 'zoom', 90, 1000],
+            ['#services .svc-card:first-child', 'left'],
+            ['#services .svc-card:last-child', 'right', 0, 120],
+            ['.svc-card li', 'left', 70, 300],
+            ['#before-after .text-center > p', 'up', 120],
+            ['#before-after .ba-stage', 'zoom'],
+            ['#before-after .grid > div', 'up', 110],
+            ['#cost-calculator > div > p', 'up'],
+            ['#cost-calculator .bg-gray-50', 'up', 0, 120],
+            ['#reviews .grid > div', 'up', 120],
+            ['footer .grid > div', 'up', 100],
+        ];
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            document.querySelectorAll('.title-bar').forEach(el => el.classList.add('is-visible'));
+        } else {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+            revealGroups.forEach(([selector, type, step = 0, base = 0]) => {
+                document.querySelectorAll(selector).forEach(el => {
+                    // stagger among matching siblings, so each list/grid starts from zero
+                    const index = [...el.parentElement.children].filter(c => c.matches(selector)).indexOf(el);
+                    el.dataset.reveal = type;
+                    el.style.setProperty('--d', `${base + index * step}ms`);
+                    // drop the delay once revealed so hover effects respond instantly
+                    el.addEventListener('transitionend', (e) => {
+                        if (e.propertyName === 'opacity' && el.classList.contains('is-visible')) el.style.setProperty('--d', '0ms');
+                    });
+                    revealObserver.observe(el);
+                });
+            });
+        }
+
+        // Shimmer on the main conversion buttons
+        document.querySelectorAll('#primary-cta, #lead-form button[type="submit"], #calculator-form button[type="submit"]')
+            .forEach(btn => btn.classList.add('cta-shine'));
+
+        // Ripple from the press point
+        document.querySelectorAll('#primary-cta, button[type="submit"], .ba-btn, .faq-trigger, a.bg-brand-600, a.bg-brand-500')
+            .forEach(el => el.classList.add('ripple-host'));
+        document.addEventListener('pointerdown', (e) => {
+            const host = e.target.closest('.ripple-host');
+            if (!host || prefersReducedMotion) return;
+            const r = host.getBoundingClientRect(), size = Math.max(r.width, r.height) * 2.2;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px`;
+            host.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove());
+        });
+
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (!prefersReducedMotion && finePointer) {
+            // Service cards tilt toward the cursor with a soft glare
+            document.querySelectorAll('.svc-card').forEach(card => {
+                const glare = document.createElement('span');
+                glare.className = 'glare';
+                card.appendChild(glare);
+                card.addEventListener('pointermove', (e) => {
+                    if (!card.classList.contains('is-visible')) return;
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+                    card.classList.add('is-tilting');
+                    card.style.transform = `perspective(900px) rotateX(${(0.5 - y) * 6}deg) rotateY(${(x - 0.5) * 8}deg) translateY(-4px)`;
+                    card.style.setProperty('--mx', `${x * 100}%`);
+                    card.style.setProperty('--my', `${y * 100}%`);
+                });
+                card.addEventListener('pointerleave', () => {
+                    card.classList.remove('is-tilting');
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        // Hero stats count up once they appear
+        document.querySelectorAll('.hero-stats [data-count]').forEach(el => {
+            if (prefersReducedMotion) return;
+            const target = +el.dataset.count, t0 = performance.now() + 1000;
+            el.textContent = '0';
+            const step = (now) => {
+                const k = Math.min(1, Math.max(0, (now - t0) / 1600));
+                el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString();
+                if (k < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        });
+
+        // Rating counts up and the stars pop in when the reviews come into view
+        const ratingCount = document.getElementById('rating-count');
+        const ratingStars = document.getElementById('rating-stars');
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+            ratingStars.classList.add('stars-anim');
+            ratingCount.textContent = '0.0';
+            const ratingObserver = new IntersectionObserver(([entry]) => {
+                if (!entry.isIntersecting) return;
+                ratingObserver.disconnect();
+                ratingStars.classList.add('is-lit');
+                const t0 = performance.now();
+                const step = (now) => {
+                    const k = Math.min(1, (now - t0) / 1400);
+                    ratingCount.textContent = (4.9 * (1 - Math.pow(1 - k, 3))).toFixed(1);
+                    if (k < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            }, { threshold: 0.5 });
+            ratingObserver.observe(ratingCount);
+        }
+
+        // ---------- Color theme switcher ----------
+        const THEMES = {
+            aqua: { floor: 'Glacier Teal' },
+            gold: { floor: 'Midnight Gold' },
+            royal: { floor: 'Amethyst Violet' },
+            emerald: { floor: 'Jade Emerald' },
+        };
+        const themePicker = document.getElementById('theme-picker');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeOptions = themePicker.querySelectorAll('[data-theme-choice]');
+        const finishTag = document.getElementById('hero-finish-tag');
+        const currentTheme = () => (THEMES[document.documentElement.dataset.theme] ? document.documentElement.dataset.theme : 'aqua');
+
+        function applyTheme(key) {
+            document.documentElement.dataset.theme = key;
+            themeOptions.forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeChoice === key)));
+            finishTag.textContent = `Shown: ${THEMES[key].floor} metallic epoxy`;
+            try { localStorage.setItem('epg-theme', key); } catch (e) {}
+            document.dispatchEvent(new CustomEvent('themechange', { detail: key }));
+        }
+
+        // Circular wipe from the click point (View Transitions), with a color crossfade fallback
+        function switchTheme(key, x, y) {
+            if (key === currentTheme()) return;
+            if (!document.startViewTransition || prefersReducedMotion) {
+                document.documentElement.classList.add('theme-fade');
+                applyTheme(key);
+                setTimeout(() => document.documentElement.classList.remove('theme-fade'), 700);
+                return;
+            }
+            const transition = document.startViewTransition(() => applyTheme(key));
+            transition.ready.then(() => {
+                const r = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+                document.documentElement.animate(
+                    { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
+                    { duration: 750, easing: 'cubic-bezier(.4,0,.2,1)', pseudoElement: '::view-transition-new(root)' }
+                );
+            }).catch(() => {});
+        }
+
+        const setMenu = (open) => {
+            themePicker.classList.toggle('is-open', open);
+            themeToggle.setAttribute('aria-expanded', String(open));
+        };
+        themeToggle.addEventListener('click', () => setMenu(!themePicker.classList.contains('is-open')));
+        themeOptions.forEach(opt => opt.addEventListener('click', (e) => {
+            const r = opt.getBoundingClientRect();
+            const x = e.clientX || r.left + r.width / 2, y = e.clientY || r.top + r.height / 2;
+            setMenu(false);
+            switchTheme(opt.dataset.themeChoice, x, y);
+        }));
+        document.addEventListener('click', (e) => { if (!themePicker.contains(e.target)) setMenu(false); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && themePicker.classList.contains('is-open')) { setMenu(false); themeToggle.focus(); } });
+        applyTheme(currentTheme());
+
+        if (!prefersReducedMotion) {
+            // Magnetic buttons lean toward the cursor
+            if (finePointer) {
+                document.querySelectorAll('.magnetic').forEach(el => {
+                    el.addEventListener('pointermove', (e) => {
+                        const r = el.getBoundingClientRect();
+                        el.style.translate = `${(e.clientX - r.left - r.width / 2) * 0.18}px ${(e.clientY - r.top - r.height / 2) * 0.3}px`;
+                    });
+                    el.addEventListener('pointerleave', () => { el.style.translate = ''; });
+                });
+            }
+
+            // Hero content drifts up and fades slightly as you scroll past it
+            const heroEl = document.querySelector('.hero');
+            const heroInner = heroEl.querySelector(':scope > .max-w-7xl');
+            window.addEventListener('scroll', () => {
+                const h = heroEl.offsetHeight, y = Math.min(window.scrollY, h);
+                heroInner.style.transform = y > 0 ? `translateY(${y * 0.16}px)` : '';
+                heroInner.style.opacity = String(1 - (y / h) * 0.55);
+            }, { passive: true });
+        }
+
+        // Back-to-top button whose ring fills with scroll progress
+        const toTop = document.createElement('button');
+        toTop.type = 'button';
+        toTop.className = 'to-top';
+        toTop.setAttribute('aria-label', 'Back to top');
+        toTop.innerHTML = '<svg class="progress-ring" viewBox="0 0 52 52"><circle class="track" cx="26" cy="26" r="21"/><circle class="bar" cx="26" cy="26" r="21"/></svg>'
+            + '<svg class="arrow h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+        document.body.appendChild(toTop);
+        const toTopBar = toTop.querySelector('.bar');
+        const updateToTop = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            toTop.classList.toggle('is-shown', window.scrollY > 600);
+            toTopBar.style.strokeDashoffset = String(131.95 * (1 - (max > 0 ? window.scrollY / max : 0)));
+        };
+        window.addEventListener('scroll', updateToTop, { passive: true });
+        updateToTop();
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' }));
+
+        // Spotlight follows the cursor across glass cards
+        if (!prefersReducedMotion && finePointer) {
+            document.addEventListener('pointermove', (e) => {
+                const card = e.target.closest && e.target.closest('.glass-card');
+                if (!card) return;
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                card.style.setProperty('--my', `${e.clientY - r.top}px`);
+            }, { passive: true });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return; // placeholder links: querySelector('#') would throw
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- ===================== Hero "main image": metallic epoxy floor (WebGL) ===================== -->
+    <script>
+    (function () {
+        const canvas = document.getElementById('hero-floor');
+        const hero = canvas.parentElement;
+        const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance' });
+        if (!gl) return; // CSS gradient fallback stays visible
+
+        const vert = 'attribute vec2 aPos; varying vec2 vUv; void main(){ vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }';
+        const frag = `
+            precision highp float;
+            uniform vec2 uRes; uniform float uTime; uniform vec2 uLight;
+            uniform vec3 uBase; uniform vec3 uMid; uniform vec3 uGold; uniform vec3 uHi;
+            varying vec2 vUv;
+
+            float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+            float noise(vec2 p) {
+                vec2 i = floor(p), f = fract(p), u = f * f * (3.0 - 2.0 * f);
+                return mix(mix(hash(i), hash(i + vec2(1, 0)), u.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), u.x), u.y);
+            }
+            float fbm(vec2 p) {
+                float s = 0.0, a = 0.5;
+                mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+                for (int i = 0; i < 5; i++) { s += a * noise(p); p = m * p; a *= 0.5; }
+                return s;
+            }
+
+            void main() {
+                vec2 uv = vUv;
+                float aspect = uRes.x / uRes.y;
+                float sx = (uv.x - 0.5) * aspect;
+
+                // Fake perspective: the top of the frame is the far end of a glossy floor.
+                float nearness = 1.0 - uv.y;
+                float dist = 1.0 / (0.2 + 0.8 * nearness);
+                vec2 p = vec2(sx * dist, dist * 1.7) * 0.85;
+                float t = uTime;
+
+                // Domain-warped flow = the "poured" metallic swirls
+                vec2 q = vec2(fbm(p + vec2(0.0, t * 0.03)), fbm(p + vec2(5.2, 1.3) - t * 0.02));
+                vec2 r = vec2(fbm(p + 3.4 * q + vec2(1.7, 9.2) + t * 0.035), fbm(p + 3.4 * q + vec2(8.3, 2.8) - t * 0.025));
+                vec2 w = p + 3.0 * r;
+                float h = fbm(w);
+                float flow = smoothstep(0.5, 0.8, fbm(w * 1.4 + 4.1));
+                float ridge = 1.0 - abs(2.0 * fbm(p * 1.8 + 2.6 * r + 8.3) - 1.0);
+                float vein = pow(ridge, 9.0);
+
+                // Surface normal from the height field (for glints)
+                float e = 0.012 * dist;
+                float hx = fbm(w + vec2(e, 0.0)), hy = fbm(w + vec2(0.0, e));
+                vec3 n = normalize(vec3((h - hx) / e * 0.035, (h - hy) / e * 0.035, 1.0));
+
+                vec3 base = uBase, mid = uMid, gold = uGold, hi = uHi;
+                vec3 col = mix(base, mid, smoothstep(0.3, 0.75, h));
+                col = mix(col, gold, flow * 0.62 + vein * 0.45);
+
+                // Moving light (follows the cursor) — diffuse + tight metallic specular
+                vec3 L = normalize(vec3((uLight.x - uv.x) * aspect * 1.3, (uLight.y - uv.y) * 1.3, 0.55));
+                vec3 V = normalize(vec3(0.0, -0.45, 0.9));
+                vec3 H = normalize(L + V);
+                float diff = max(dot(n, L), 0.0);
+                float spec = pow(max(dot(n, H), 0.0), 110.0);
+                float lightFall = exp(-2.2 * length((uLight - uv) * vec2(aspect, 1.0)));
+                col *= 0.55 + 0.55 * diff;
+                col += hi * spec * (0.5 + vein * 1.5 + flow) * (0.6 + 1.6 * lightFall);
+                col += gold * lightFall * 0.12;
+
+                // Reflections of ceiling light strips, rippled by the surface normal
+                float fres = mix(0.35, 1.0, uv.y);
+                float strips = 0.0;
+                for (int i = 0; i < 3; i++) {
+                    float lx = (float(i) - 1.0) * 1.35 + 0.9;
+                    float d = (p.x - lx + n.x * 1.4) / 0.13;
+                    strips += exp(-d * d) * (0.55 + 0.45 * smoothstep(0.2, 0.9, fract(p.y * 0.22 + float(i) * 0.3)));
+                }
+                col += vec3(1.0, 0.95, 0.86) * strips * 0.28 * fres;
+
+                // Depth haze toward the far wall + vignette + grain
+                col = mix(col, uBase * 0.85, smoothstep(0.62, 1.0, uv.y) * 0.75);
+                col *= 1.0 - 0.35 * pow(length((uv - vec2(0.6, 0.5)) * vec2(1.1, 1.3)), 2.2);
+                col += (hash(uv * uRes + fract(t) * 91.7) - 0.5) * 0.018;
+
+                col = col / (1.0 + col * 0.55) * 1.5;
+                gl_FragColor = vec4(col, 1.0);
+            }`;
+
+        function compile(type, src) {
+            const sh = gl.createShader(type);
+            gl.shaderSource(sh, src);
+            gl.compileShader(sh);
+            if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(sh)); return null; }
+            return sh;
+        }
+        const vs = compile(gl.VERTEX_SHADER, vert), fs = compile(gl.FRAGMENT_SHADER, frag);
+        if (!vs || !fs) return;
+        const prog = gl.createProgram();
+        gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); return; }
+        gl.useProgram(prog);
+
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW); // one oversized triangle
+        const aPos = gl.getAttribLocation(prog, 'aPos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+        const uRes = gl.getUniformLocation(prog, 'uRes');
+        const uTime = gl.getUniformLocation(prog, 'uTime');
+        const uLight = gl.getUniformLocation(prog, 'uLight');
+        const uColors = ['uBase', 'uMid', 'uGold', 'uHi'].map(n => gl.getUniformLocation(prog, n));
+
+        // Floor colors come from the active theme and blend smoothly when it changes
+        const readTheme = () => {
+            const cs = getComputedStyle(document.documentElement);
+            const v = (name) => cs.getPropertyValue(name).trim().split(/\s+/).map(Number).map(c => c / 255);
+            const mix = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t);
+            const ink = v('--ink');
+            return [ink.map(c => c * 0.9 + 0.012), mix(v('--brand-900'), ink, 0.35), v('--brand-500').map(c => c * 0.9), v('--brand-200')];
+        };
+        let colors = readTheme(), targetColors = colors;
+
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const light = { x: 0.72, y: 0.55, tx: 0.72, ty: 0.55 };
+        // Render below native resolution (the image is soft by nature); drop further if frames run slow.
+        let scale = Math.min(window.devicePixelRatio || 1, 1.25) * (window.innerWidth < 768 ? 0.7 : 0.85);
+
+        function resize() {
+            const w = Math.max(1, Math.round(hero.clientWidth * scale));
+            const h = Math.max(1, Math.round(hero.clientHeight * scale));
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w; canvas.height = h;
+                gl.viewport(0, 0, w, h);
+            }
+        }
+        new ResizeObserver(() => { resize(); if (reduce) draw(8); }).observe(hero);
+
+        hero.addEventListener('pointermove', (e) => {
+            const r = hero.getBoundingClientRect();
+            light.tx = (e.clientX - r.left) / r.width;
+            light.ty = 1 - (e.clientY - r.top) / r.height;
+        });
+        hero.addEventListener('pointerleave', () => { light.tx = 0.72; light.ty = 0.55; });
+
+        function draw(time) {
+            gl.uniform2f(uRes, canvas.width, canvas.height);
+            gl.uniform1f(uTime, time);
+            gl.uniform2f(uLight, light.x, light.y);
+            colors.forEach((c, i) => gl.uniform3fv(uColors[i], c));
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+
+        let running = false, raf = 0, last = performance.now(), elapsed = 8, slowFrames = 0;
+        function frame(now) {
+            const dt = Math.min(0.05, (now - last) / 1000);
+            last = now;
+            elapsed += dt;
+            // idle drift of the light so the gloss keeps moving without a cursor
+            const idleX = 0.72 + Math.sin(elapsed * 0.35) * 0.12, idleY = 0.55 + Math.cos(elapsed * 0.27) * 0.1;
+            const tx = hero.matches(':hover') ? light.tx : idleX, ty = hero.matches(':hover') ? light.ty : idleY;
+            light.x += (tx - light.x) * Math.min(1, dt * 4);
+            light.y += (ty - light.y) * Math.min(1, dt * 4);
+            const blend = Math.min(1, dt * 3);
+            colors = colors.map((c, i) => c.map((x, j) => x + (targetColors[i][j] - x) * blend));
+            if (dt > 0.03 && scale > 0.45 && ++slowFrames > 20) { scale *= 0.8; slowFrames = 0; resize(); }
+            draw(elapsed);
+            raf = requestAnimationFrame(frame);
+        }
+
+        document.addEventListener('themechange', () => {
+            targetColors = readTheme();
+            if (reduce || !running) { colors = targetColors; draw(elapsed); }
+        });
+
+        resize();
+        draw(elapsed);
+        canvas.classList.add('is-ready');
+        if (reduce) return; // a single still frame
+
+        new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && !running) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+            else if (!entry.isIntersecting && running) { running = false; cancelAnimationFrame(raf); }
+        }).observe(hero);
+    })();
+    </script>
+
+    <!-- ===================== 3D Before / After (Three.js) ===================== -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+        const stage = document.getElementById('ba-stage');
+        const canvasEl = document.getElementById('ba-canvas');
+        const loader = document.getElementById('ba-loader');
+        const caption = document.getElementById('ba-caption');
+        const handle = document.getElementById('ba-handle');
+        const autoBtn = document.getElementById('ba-auto');
+        const replayBtn = document.getElementById('ba-replay');
+        const paletteName = document.getElementById('ba-palette-name');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const PALETTES = {
+            gold:   { name: 'Midnight Gold',  base: '#101217', mid: '#39321f', vein: '#b98f3e', hi: '#f7dc92' },
+            silver: { name: 'Glacier Silver', base: '#161c24', mid: '#4d5a69', vein: '#aebccb', hi: '#ffffff' },
+            copper: { name: 'Copper Lava',    base: '#150b08', mid: '#4d2214', vein: '#b85c2c', hi: '#ffbf85' },
+        };
+
+        // Room: floor spans x -5..5, z -4..4. Back wall inner face at z = -4, left wall inner face at x = -5.
+        const HOTSPOTS = [
+            { side: 'before', p: [-2.69, 2.5, -3.95], label: 'Stair-step foundation crack', c: '#f87171' },
+            { side: 'before', p: [1.2, 3.45, -3.7],   label: 'Leaking supply line',         c: '#60a5fa' },
+            { side: 'before', p: [2.6, 0.02, 1.6],    label: 'Standing water',              c: '#60a5fa' },
+            { side: 'before', p: [-4.95, 0.55, 1.3],  label: 'Efflorescence & mold',        c: '#f87171' },
+            { side: 'after',  p: [-4.95, 2.6, -0.4],  label: 'Crack-injected, sealed walls', c: '#34d399' },
+            { side: 'after',  p: [0.9, 0.06, -3.88],  label: 'Interior drain tile',          c: '#34d399' },
+            { side: 'after',  p: [-4.45, 0.3, 2.9],   label: 'Sump pump + battery backup',   c: '#34d399' },
+            { side: 'after',  p: [1.8, 0.02, 1.2],    label: 'Metallic epoxy, 3-coat system', c: 'rgb(var(--brand-400))' },
+            { side: 'after',  p: [3.9, 0.95, -3.35],  label: 'Dehumidifier at 45% RH',       c: '#34d399' },
+        ];
+
+        /* ------------------------------------------------------------------
+         * Procedural texture helpers (no image downloads — everything is painted)
+         * ------------------------------------------------------------------ */
+        function mulberry32(a) {
+            return function () {
+                a |= 0; a = (a + 0x6D2B79F5) | 0;
+                let t = Math.imul(a ^ (a >>> 15), 1 | a);
+                t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        function createNoise(seed) {
+            const rand = mulberry32(seed);
+            const p = Array.from({ length: 256 }, (_, i) => i);
+            for (let i = 255; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+            const perm = new Uint8Array(512);
+            for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+            const vals = new Float32Array(256).map(() => rand());
+            const noise = (x, y) => {
+                const xi = Math.floor(x), yi = Math.floor(y);
+                const xf = x - xi, yf = y - yi, X = xi & 255, Y = yi & 255;
+                const a = vals[perm[perm[X] + Y]], b = vals[perm[perm[X + 1] + Y]];
+                const c = vals[perm[perm[X] + Y + 1]], d = vals[perm[perm[X + 1] + Y + 1]];
+                const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+                return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+            };
+            const fbm = (x, y, oct = 4) => {
+                let s = 0, amp = 0.5, f = 1, norm = 0;
+                for (let i = 0; i < oct; i++) { s += amp * noise(x * f, y * f); norm += amp; amp *= 0.5; f *= 2.03; }
+                return s / norm;
+            };
+            return { noise, fbm, rand };
+        }
+
+        const clamp01 = (x) => Math.min(1, Math.max(0, x));
+        const smooth = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+        const remap = (t, a, b) => clamp01((t - a) / (b - a));
+        const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+        const easeOutBack = (t) => { const c = 1.9; return t <= 0 ? 0 : 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+        const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+
+        function makeCanvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+
+        function paintField(w, h, fn) {
+            const c = makeCanvas(w, h), ctx = c.getContext('2d');
+            const img = ctx.createImageData(w, h), d = img.data, o = [0, 0, 0];
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    fn(x / w, y / h, o);
+                    const i = (y * w + x) * 4;
+                    d[i] = o[0]; d[i + 1] = o[1]; d[i + 2] = o[2]; d[i + 3] = 255;
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+            return c;
+        }
+
+        function addGrain(ctx, w, h, amount, rand) {
+            const img = ctx.getImageData(0, 0, w, h), d = img.data;
+            for (let i = 0; i < d.length; i += 4) {
+                const n = (rand() - 0.5) * amount;
+                d[i] += n; d[i + 1] += n; d[i + 2] += n;
+            }
+            ctx.putImageData(img, 0, 0);
+        }
+
+        function cloneCanvas(src) {
+            const c = makeCanvas(src.width, src.height);
+            c.getContext('2d').drawImage(src, 0, 0);
+            return c;
+        }
+
+        // Branching random-walk crack. Same seed => same path, so "filled" cracks line up with the originals.
+        function drawCrack(ctx, rand, x, y, angle, len, width, style, depth = 0) {
+            const stroke = () => { ctx.strokeStyle = style; ctx.lineWidth = width; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; };
+            stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+            const steps = Math.floor(len / 6);
+            for (let i = 0; i < steps; i++) {
+                angle += (rand() - 0.5) * 0.75;
+                x += Math.cos(angle) * 6; y += Math.sin(angle) * 6;
+                ctx.lineTo(x, y);
+                if (depth < 2 && rand() < 0.045) {
+                    ctx.stroke();
+                    drawCrack(ctx, rand, x, y, angle + (rand() < 0.5 ? -1 : 1) * (0.6 + rand() * 0.6), len * 0.35, width * 0.6, style, depth + 1);
+                    stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+
+        const FLOOR_CRACKS = [[180, 300, 0.25, 620, 3.2], [700, 90, 1.9, 520, 2.6], [860, 760, 3.5, 480, 2.4], [420, 980, -1.3, 380, 2]];
+        const worldToFloorPx = (x, z, S) => [((x + 5) / 10) * S, ((z + 4) / 8) * S];
+
+        function concreteBase(seed) {
+            const N = createNoise(seed);
+            const small = paintField(512, 512, (u, v, o) => {
+                const g = 122 + (N.fbm(u * 6, v * 6, 5) - 0.5) * 95 + (N.fbm(u * 24 + 3, v * 24 + 7, 3) - 0.5) * 34;
+                o[0] = g; o[1] = g * 0.985; o[2] = g * 0.955;
+            });
+            const c = makeCanvas(1024, 1024), ctx = c.getContext('2d');
+            ctx.drawImage(small, 0, 0, 1024, 1024);
+            addGrain(ctx, 1024, 1024, 30, N.rand);
+            return c;
+        }
+
+        function floorBeforeTexture(base) {
+            const c = cloneCanvas(base), ctx = c.getContext('2d'), rand = mulberry32(21), S = 1024;
+            ctx.fillStyle = 'rgba(40,34,26,0.18)'; ctx.fillRect(0, 0, S, S);
+            // grime + rust stains
+            for (let i = 0; i < 16; i++) {
+                const x = rand() * S, y = rand() * S, r = 60 + rand() * 200;
+                const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                const rust = rand() < 0.3;
+                g.addColorStop(0, rust ? 'rgba(110,62,30,0.28)' : 'rgba(35,30,22,0.32)');
+                g.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+            }
+            // dark wet zones + mineral tide rings around puddles
+            [[1.25, -3.1, 1.6], [2.6, 1.6, 1.9], [-2.6, -3.55, 1.1]].forEach(([x, z, s]) => {
+                const [px, py] = worldToFloorPx(x, z, S), r = s * 110;
+                const g = ctx.createRadialGradient(px, py, 0, px, py, r);
+                g.addColorStop(0, 'rgba(20,18,15,0.55)'); g.addColorStop(1, 'rgba(20,18,15,0)');
+                ctx.fillStyle = g; ctx.fillRect(px - r, py - r, r * 2, r * 2);
+                for (let k = 0; k < 3; k++) {
+                    ctx.strokeStyle = `rgba(225,220,205,${0.14 - k * 0.03})`; ctx.lineWidth = 2 + rand() * 2;
+                    ctx.beginPath(); ctx.ellipse(px, py, r * (0.8 + k * 0.18), r * (0.5 + k * 0.12), rand() * 0.4, 0, Math.PI * 2); ctx.stroke();
+                }
+            });
+            FLOOR_CRACKS.forEach(([x, y, a, l, w], i) => {
+                drawCrack(ctx, mulberry32(100 + i), x + 1.5, y + 1.5, a, l, w + 1.5, 'rgba(190,185,175,0.35)');
+                drawCrack(ctx, mulberry32(100 + i), x, y, a, l, w, 'rgba(18,16,14,0.95)');
+            });
+            return c;
+        }
+
+        function floorPreppedTexture(base) {
+            const c = cloneCanvas(base), ctx = c.getContext('2d'), rand = mulberry32(33), S = 1024;
+            ctx.fillStyle = 'rgba(255,255,255,0.14)'; ctx.fillRect(0, 0, S, S);
+            // diamond-grinder swirl marks
+            for (let i = 0; i < 140; i++) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1 + rand() * 2;
+                ctx.beginPath(); ctx.arc(rand() * S, rand() * S, 30 + rand() * 60, rand() * 6, rand() * 6 + 2.5); ctx.stroke();
+            }
+            FLOOR_CRACKS.forEach(([x, y, a, l, w], i) => drawCrack(ctx, mulberry32(100 + i), x, y, a, l, w + 3, 'rgba(172,170,164,1)'));
+            return c;
+        }
+
+        // Vertical stain with soft sides: stacked, narrowing gradient strips.
+        function softStreak(ctx, x, y, w, len, rgb, alpha) {
+            for (let i = 0; i < 6; i++) {
+                const k = 1 - i / 6, g = ctx.createLinearGradient(0, y, 0, y + len * (0.6 + 0.4 * k));
+                g.addColorStop(0, `rgba(${rgb},${alpha / 6})`); g.addColorStop(1, `rgba(${rgb},0)`);
+                ctx.fillStyle = g; ctx.fillRect(x - (w * k) / 2, y, w * k, len * (0.6 + 0.4 * k));
+            }
+        }
+
+        function blockWallTexture(seed, { crackU = 0.25, moldU = [0.05] } = {}) {
+            const W = 1024, H = 512, N = createNoise(seed), rand = N.rand;
+            const small = paintField(512, 256, (u, v, o) => {
+                const g = 134 + (N.fbm(u * 10, v * 4, 4) - 0.5) * 70;
+                o[0] = g; o[1] = g * 0.985; o[2] = g * 0.955;
+            });
+            const c = makeCanvas(W, H), ctx = c.getContext('2d');
+            ctx.drawImage(small, 0, 0, W, H);
+            const rows = 20, cols = 25, bh = H / rows, bw = W / cols;
+            for (let r = 0; r < rows; r++) {
+                const off = r % 2 ? bw / 2 : 0;
+                for (let k = -1; k < cols + 1; k++) {
+                    ctx.fillStyle = `rgba(${rand() < 0.5 ? '0,0,0' : '255,255,255'},${rand() * 0.07})`;
+                    ctx.fillRect(k * bw + off, r * bh, bw, bh);
+                }
+            }
+            ctx.strokeStyle = 'rgba(190,186,176,0.6)'; ctx.lineWidth = 2;
+            for (let r = 0; r <= rows; r++) { ctx.beginPath(); ctx.moveTo(0, r * bh); ctx.lineTo(W, r * bh); ctx.stroke(); }
+            for (let r = 0; r < rows; r++) {
+                const off = r % 2 ? bw / 2 : 0;
+                for (let k = 0; k <= cols; k++) { ctx.beginPath(); ctx.moveTo(k * bw + off, r * bh); ctx.lineTo(k * bw + off, (r + 1) * bh); ctx.stroke(); }
+            }
+            addGrain(ctx, W, H, 22, rand);
+            // water trails from above
+            for (let i = 0; i < 9; i++) softStreak(ctx, rand() * W, 0, 18 + rand() * 50, 90 + rand() * 260, '45,38,28', 0.6);
+            // stair-step crack along mortar joints + wet halo below it
+            let x = crackU * W, y = H * 0.2;
+            const pts = [[x, y]];
+            for (let k = 0; k < 8; k++) { y += bh; pts.push([x, y]); x += (rand() < 0.5 ? -1 : 1) * bw / 2; pts.push([x, y]); }
+            softStreak(ctx, crackU * W, H * 0.2, 150, H * 0.8, '30,26,20', 0.75);
+            ctx.strokeStyle = 'rgba(15,13,11,0.95)'; ctx.lineWidth = 3.5; ctx.lineJoin = 'round';
+            ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px + (rand() - 0.5) * 3, py) : ctx.moveTo(px, py))); ctx.stroke();
+            // rising damp band + efflorescence
+            const damp = ctx.createLinearGradient(0, H, 0, H * 0.62);
+            damp.addColorStop(0, 'rgba(30,27,22,0.6)'); damp.addColorStop(1, 'rgba(30,27,22,0)');
+            ctx.fillStyle = damp; ctx.fillRect(0, H * 0.62, W, H * 0.38);
+            ctx.beginPath(); ctx.moveTo(0, H);
+            for (let px = 0; px <= W; px += 8) ctx.lineTo(px, H * (0.86 - 0.1 * N.fbm(px / 70, 3.3, 3)));
+            ctx.lineTo(W, H); ctx.closePath();
+            const eff = ctx.createLinearGradient(0, H, 0, H * 0.72);
+            eff.addColorStop(0, 'rgba(236,232,220,0.1)'); eff.addColorStop(0.55, 'rgba(236,232,220,0.55)'); eff.addColorStop(1, 'rgba(236,232,220,0)');
+            ctx.fillStyle = eff; ctx.fill();
+            // mold colonies
+            moldU.forEach((mu) => {
+                const cx = mu * W, cy = H * 0.8, g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 110);
+                g.addColorStop(0, 'rgba(28,38,24,0.45)'); g.addColorStop(1, 'rgba(28,38,24,0)');
+                ctx.save(); ctx.translate(cx, cy); ctx.scale(1.5, 0.75); ctx.translate(-cx, -cy);
+                ctx.fillStyle = g; ctx.fillRect(cx - 110, cy - 110, 220, 220); ctx.restore();
+                for (let i = 0; i < 520; i++) {
+                    const r = Math.pow(rand(), 1.4) * 95, a = rand() * Math.PI * 2;
+                    ctx.fillStyle = `rgba(${20 + rand() * 18},${32 + rand() * 22},${18 + rand() * 10},${0.2 + rand() * 0.45})`;
+                    ctx.beginPath(); ctx.arc(cx + Math.cos(a) * r * 1.5, cy + Math.sin(a) * r * 0.7, 0.6 + rand() * 2.2, 0, Math.PI * 2); ctx.fill();
+                }
+            });
+            return c;
+        }
+
+        function sealedWallTexture(seed) {
+            const W = 1024, H = 512, N = createNoise(seed);
+            const small = paintField(256, 128, (u, v, o) => {
+                const g = (N.fbm(u * 8, v * 4, 3) - 0.5) * 16;
+                o[0] = 220 + g; o[1] = 216 + g; o[2] = 208 + g;
+            });
+            const c = makeCanvas(W, H), ctx = c.getContext('2d');
+            ctx.drawImage(small, 0, 0, W, H);
+            addGrain(ctx, W, H, 8, N.rand);
+            // ribbed vapor-barrier panel on the lower 30%
+            const y0 = H * 0.7;
+            ctx.fillStyle = '#eef1f2'; ctx.fillRect(0, y0, W, H - y0);
+            for (let x = 0; x < W; x += 9) { ctx.fillStyle = 'rgba(0,0,0,0.07)'; ctx.fillRect(x, y0, 2, H - y0); }
+            for (let x = 0; x < W; x += 122) { ctx.fillStyle = 'rgba(0,0,0,0.16)'; ctx.fillRect(x, y0, 2, H - y0); }
+            ctx.fillStyle = '#b9bec2'; ctx.fillRect(0, y0 - 7, W, 7);
+            ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0, y0, W, 4);
+            return c;
+        }
+
+        function epoxyTexture(pal, seed = 11) {
+            const S = 512, N = createNoise(seed);
+            const [b, m, v, h] = [pal.base, pal.mid, pal.vein, pal.hi].map(hexRgb);
+            const mix = (a, c, t, o) => { o[0] = a[0] + (c[0] - a[0]) * t; o[1] = a[1] + (c[1] - a[1]) * t; o[2] = a[2] + (c[2] - a[2]) * t; };
+            const tmp = [0, 0, 0];
+            return paintField(S, S, (u, w, o) => {
+                const x = u * 2.2, y = w * 2.2;
+                const qx = N.fbm(x, y, 4), qy = N.fbm(x + 5.2, y + 1.3, 4);
+                const wx = x + 3.2 * qx, wy = y + 3.2 * qy;
+                const r = N.fbm(wx + 1.7, wy + 9.2, 4);
+                const flow = smooth(0.52, 0.78, N.fbm(wx * 1.6 + 4.1, wy * 1.6 + 2.7, 4));
+                const ridge = 1 - Math.abs(2 * N.fbm(wx * 3.1 + 8.3, wy * 3.1 + 0.6, 4) - 1);
+                const cell = Math.pow(ridge, 9);
+                mix(b, m, smooth(0.28, 0.72, r), tmp);
+                mix(tmp, v, flow * 0.55, tmp);
+                mix(tmp, v, cell * 0.35, tmp);
+                mix(tmp, h, Math.pow(ridge, 26) * (0.35 + flow * 0.5), o);
+            });
+        }
+
+        function grateTexture(horizontal) {
+            const c = makeCanvas(256, 256), ctx = c.getContext('2d');
+            ctx.fillStyle = '#1f2327'; ctx.fillRect(0, 0, 256, 256);
+            ctx.fillStyle = '#4a5157';
+            for (let i = 0; i < 256; i += 16) horizontal ? ctx.fillRect(0, i, 256, 8) : ctx.fillRect(i, 0, 8, 256);
+            const t = new THREE.CanvasTexture(c);
+            t.colorSpace = THREE.SRGBColorSpace;
+            t.wrapS = t.wrapT = THREE.RepeatWrapping;
+            return t;
+        }
+
+        function dehumidifierFront() {
+            const c = makeCanvas(256, 384), ctx = c.getContext('2d');
+            ctx.fillStyle = '#f3f4f6'; ctx.fillRect(0, 0, 256, 384);
+            ctx.fillStyle = '#22272c';
+            if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(28, 28, 200, 92, 14); ctx.fill(); } else ctx.fillRect(28, 28, 200, 92);
+            ctx.fillStyle = '#34d399'; ctx.font = 'bold 58px system-ui, sans-serif'; ctx.textBaseline = 'middle';
+            ctx.fillText('45%', 50, 76);
+            ctx.font = 'bold 20px system-ui, sans-serif'; ctx.fillText('RH', 176, 88);
+            for (let y = 160; y < 356; y += 14) { ctx.fillStyle = '#c9cdd2'; ctx.fillRect(34, y, 188, 6); }
+            const t = new THREE.CanvasTexture(c);
+            t.colorSpace = THREE.SRGBColorSpace;
+            return t;
+        }
+
+        /* ------------------------------------------------------------------
+         * Shader patch: "reveal" masks for the install animation.
+         *  - radial: fragments inside a wobbly, growing circle survive (epoxy pour)
+         *  - wipe:   fragments above a rising line survive (raw wall being sealed away)
+         * ------------------------------------------------------------------ */
+        function makeRevealUniforms(extra = {}) {
+            return {
+                uReveal: { value: 2 },
+                uTime: { value: 0 },
+                uOrigin: { value: new THREE.Vector2(0.5, 0.5) },
+                uAspect: { value: new THREE.Vector2(1.25, 1) },
+                uRimColor: { value: new THREE.Color(1, 0.85, 0.5) },
+                ...extra,
+            };
+        }
+
+        function addReveal(material, mode, uniforms) {
+            const mask = mode === 'radial'
+                ? `vec2 rvP = (vRvUv - uOrigin) * uAspect;
+                   float rvA = atan(rvP.y, rvP.x);
+                   float rvWob = (0.02 * sin(rvA * 7.0 + uTime * 1.3) + 0.012 * sin(rvA * 13.0 - uTime * 2.1)) * smoothstep(0.0, 0.35, uReveal);
+                   float rvD = length(rvP) - (uReveal + rvWob);
+                   if (rvD > 0.0) discard;
+                   float rvRim = smoothstep(-0.04, 0.0, rvD) * step(uReveal, 1.5);`
+                : `float rvWob = 0.012 * sin(vRvUv.x * 40.0 + uTime * 2.0);
+                   float rvD = (uReveal + rvWob) - vRvUv.y;
+                   if (rvD > 0.0) discard;
+                   float rvRim = smoothstep(-0.03, 0.0, rvD) * step(uReveal, 1.5) * step(-0.04, uReveal);`;
+            material.onBeforeCompile = (shader) => {
+                Object.assign(shader.uniforms, uniforms);
+                shader.vertexShader = 'varying vec2 vRvUv;\n' + shader.vertexShader.replace('#include <uv_vertex>', '#include <uv_vertex>\nvRvUv = uv;');
+                shader.fragmentShader = 'uniform float uReveal;\nuniform float uTime;\nuniform vec2 uOrigin;\nuniform vec2 uAspect;\nuniform vec3 uRimColor;\nvarying vec2 vRvUv;\n'
+                    + shader.fragmentShader
+                        .replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\n' + mask)
+                        .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance += uRimColor * rvRim;');
+            };
+            material.customProgramCacheKey = () => 'reveal-' + mode;
+        }
+
+        /* ------------------------------------------------------------------
+         * Scene builders
+         * ------------------------------------------------------------------ */
+        function box(w, h, d, mat, x, y, z, parent) {
+            const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+            m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true;
+            parent.add(m);
+            return m;
+        }
+        function cyl(r, h, mat, x, y, z, parent, seg = 24) {
+            const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, seg), mat);
+            m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true;
+            parent.add(m);
+            return m;
+        }
+
+        // Slab + two cut-away walls. Wall face material arrays: [px, nx, py, ny, pz, nz].
+        function buildShell(scene, { floorMat, backMat, leftMat, cutMat }) {
+            const slab = box(10.25, 0.5, 8.25, cutMat, -0.125, -0.25, -0.125, scene);
+            slab.castShadow = false;
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(10, 8), floorMat);
+            floor.rotation.x = -Math.PI / 2; floor.position.y = 0.003; floor.receiveShadow = true;
+            scene.add(floor);
+            box(10.25, 4, 0.25, [cutMat, cutMat, cutMat, cutMat, backMat, cutMat], -0.125, 2, -4.125, scene);
+            box(0.25, 4, 8.25, [leftMat, cutMat, cutMat, cutMat, cutMat, cutMat], -5.125, 2, -0.125, scene);
+            return floor;
+        }
+
+        function puddleGeometry(rx, rz, seed) {
+            const rand = mulberry32(seed), shape = new THREE.Shape(), ph = rand() * 6, ph2 = rand() * 6;
+            for (let i = 0; i <= 64; i++) {
+                const a = (i / 64) * Math.PI * 2;
+                const r = 1 + 0.22 * Math.sin(a * 3 + ph) + 0.12 * Math.sin(a * 5 + ph2);
+                const x = Math.cos(a) * rx * r, y = Math.sin(a) * rz * r;
+                i ? shape.lineTo(x, y) : shape.moveTo(x, y);
+            }
+            const g = new THREE.ShapeGeometry(shape, 1);
+            g.rotateX(-Math.PI / 2);
+            return g;
+        }
+
+        function buildBefore(env, tex) {
+            const scene = new THREE.Scene();
+            scene.environment = env;
+
+            scene.add(new THREE.HemisphereLight(0x9fb2c8, 0x1c1812, 0.75));
+            const fill = new THREE.DirectionalLight(0xa9bdd2, 0.55);
+            fill.position.set(6, 7, 9);
+            scene.add(fill);
+            const bulb = new THREE.PointLight(0xffc27a, 22, 14, 1.4);
+            bulb.position.set(-0.8, 2.95, -3.55);
+            bulb.castShadow = true; bulb.shadow.mapSize.set(512, 512); bulb.shadow.bias = -0.004;
+            scene.add(bulb);
+
+            const cutMat = new THREE.MeshStandardMaterial({ color: 0x353a41, roughness: 0.95 });
+            const floorMat = new THREE.MeshStandardMaterial({ map: tex.floorBefore, bumpMap: tex.floorBefore, bumpScale: 1.5, roughness: 0.93, envMapIntensity: 0.3 });
+            const wallMat = (t) => new THREE.MeshStandardMaterial({ map: t, bumpMap: t, bumpScale: 1.2, roughness: 0.95, envMapIntensity: 0.25 });
+            buildShell(scene, { floorMat, backMat: wallMat(tex.wallBack), leftMat: wallMat(tex.wallLeft), cutMat });
+
+            // Puddles — the one surface that is glossy "before".
+            const waterMat = new THREE.MeshPhysicalMaterial({ color: 0x1a2127, roughness: 0.03, metalness: 0.1, clearcoat: 1, transparent: true, opacity: 0.78, envMapIntensity: 1.1 });
+            [[1.25, -3.1, 1.15, 0.62, 1], [2.6, 1.6, 1.45, 0.9, 2], [-2.6, -3.55, 0.8, 0.38, 3]].forEach(([x, z, rx, rz, s]) => {
+                const p = new THREE.Mesh(puddleGeometry(rx, rz, s), waterMat);
+                p.position.set(x, 0.012, z); p.receiveShadow = true;
+                scene.add(p);
+            });
+
+            // Rusty pipe with a leaking joint
+            const rustMat = new THREE.MeshStandardMaterial({ color: 0x6d4a33, roughness: 0.72, metalness: 0.45 });
+            cyl(0.09, 10.2, rustMat, -0.1, 3.45, -3.82, scene).rotation.z = Math.PI / 2;
+            cyl(0.13, 0.22, new THREE.MeshStandardMaterial({ color: 0x8a4b22, roughness: 0.6, metalness: 0.5 }), 1.2, 3.45, -3.82, scene).rotation.z = Math.PI / 2;
+            [-3.5, -0.5, 2.5].forEach((x) => box(0.06, 0.3, 0.12, rustMat, x, 3.62, -3.92, scene));
+
+            // Caged work light (the flickering source)
+            const lampMat = new THREE.MeshStandardMaterial({ color: 0xffe2b0, emissive: 0xffc27a, emissiveIntensity: 2.2 });
+            const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 12), lampMat);
+            lamp.position.set(-0.8, 3.0, -3.8);
+            scene.add(lamp);
+            box(0.05, 0.05, 0.22, new THREE.MeshStandardMaterial({ color: 0x2a2a2a }), -0.8, 3.12, -3.9, scene);
+
+            // Water-damaged cardboard boxes — vertex colours darken the wicked-up bottoms.
+            const cardMat = new THREE.MeshStandardMaterial({ color: 0xa27f52, roughness: 0.95, vertexColors: true });
+            [[0.95, 0.62, 0.75, -4.35, 0.31, -2.55, 0.08], [0.7, 0.5, 0.6, -4.3, 0.87, -2.6, -0.2], [0.8, 0.55, 0.65, -3.35, 0.275, -3.05, 0.35]].forEach(([w, h, d, x, y, z, ry]) => {
+                const g = new THREE.BoxGeometry(w, h, d);
+                const pos = g.attributes.position, col = [];
+                for (let i = 0; i < pos.count; i++) { const k = pos.getY(i) < 0 ? 0.42 : 1; col.push(k, k * 0.97, k * 0.93); }
+                g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+                const m = new THREE.Mesh(g, cardMat);
+                m.position.set(x, y, z); m.rotation.y = ry; m.castShadow = m.receiveShadow = true;
+                scene.add(m);
+            });
+
+            // Drips (grow at a leak point, fall, then spawn ripples)
+            const dropMat = new THREE.MeshStandardMaterial({ color: 0xcde6f5, emissive: 0x1d3140, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.9 });
+            const dropGeo = new THREE.SphereGeometry(0.035, 10, 8);
+            const drips = [
+                { x: 1.2, y: 3.34, z: -3.82, grow: 0.8 },
+                { x: -2.62, y: 1.6, z: -3.93, grow: 1.7 },
+                { x: 1.32, y: 3.34, z: -3.8, grow: 1.25 },
+            ].map((d, i) => {
+                const mesh = new THREE.Mesh(dropGeo, dropMat);
+                scene.add(mesh);
+                return { ...d, mesh, t: i * 0.4, vy: 0, falling: false };
+            });
+
+            const rippleMat = () => new THREE.MeshBasicMaterial({ color: 0xd6ecf8, transparent: true, opacity: 0, depthWrite: false });
+            const rippleGeo = new THREE.RingGeometry(0.9, 1, 48).rotateX(-Math.PI / 2);
+            const ripples = Array.from({ length: 12 }, () => {
+                const m = new THREE.Mesh(rippleGeo, rippleMat());
+                m.visible = false; scene.add(m);
+                return { m, life: 0 };
+            });
+            let rippleIdx = 0;
+            const spawnRipple = (x, z, delay = 0) => {
+                const r = ripples[rippleIdx++ % ripples.length];
+                r.m.position.set(x, 0.02, z); r.life = -delay; r.m.visible = true;
+            };
+
+            // Dust drifting through the lamp light
+            const dustCount = 380, dustPos = new Float32Array(dustCount * 3), rand = mulberry32(5);
+            for (let i = 0; i < dustCount; i++) { dustPos[i * 3] = -5 + rand() * 10; dustPos[i * 3 + 1] = rand() * 4; dustPos[i * 3 + 2] = -4 + rand() * 8; }
+            const dustGeo = new THREE.BufferGeometry();
+            dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+            scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: 0xd8cdb5, size: 0.03, transparent: true, opacity: 0.45, depthWrite: false })));
+
+            let dropout = 0;
+            function update(t, dt) {
+                // flicker with the occasional brown-out
+                if (!reduceMotion) {
+                    if (dropout > 0) dropout -= dt; else if (Math.random() < 0.005) dropout = 0.06 + Math.random() * 0.12;
+                    const f = dropout > 0 ? 0.25 : 0.88 + 0.12 * Math.sin(t * 23) * Math.sin(t * 7.3);
+                    bulb.intensity = 22 * f; lampMat.emissiveIntensity = 2.2 * f;
+                }
+                for (const d of drips) {
+                    if (!d.falling) {
+                        d.t += dt;
+                        const k = Math.min(1, d.t / d.grow);
+                        d.mesh.position.set(d.x, d.y - k * 0.03, d.z);
+                        d.mesh.scale.set(k, k * 1.35, k);
+                        if (d.t >= d.grow) { d.falling = true; d.vy = 0; }
+                    } else {
+                        d.vy -= 9.8 * dt;
+                        d.mesh.position.y += d.vy * dt;
+                        d.mesh.scale.set(0.85, 1.9, 0.85);
+                        if (d.mesh.position.y <= 0.03) {
+                            spawnRipple(d.x, d.z + 0.18); spawnRipple(d.x, d.z + 0.18, 0.18);
+                            d.falling = false; d.t = 0;
+                        }
+                    }
+                }
+                for (const r of ripples) {
+                    if (!r.m.visible) continue;
+                    r.life += dt;
+                    if (r.life < 0) { r.m.material.opacity = 0; continue; }
+                    const k = r.life / 1.3;
+                    if (k >= 1) { r.m.visible = false; continue; }
+                    const s = 0.04 + k * 0.55;
+                    r.m.scale.set(s, 1, s * 0.85);
+                    r.m.material.opacity = 0.55 * (1 - k);
+                }
+                const pa = dustGeo.attributes.position.array;
+                for (let i = 0; i < dustCount; i++) {
+                    pa[i * 3] += Math.sin(t * 0.3 + i) * 0.0015;
+                    pa[i * 3 + 1] += 0.0025 + Math.sin(t * 0.7 + i * 1.7) * 0.001;
+                    if (pa[i * 3 + 1] > 4) pa[i * 3 + 1] = 0;
+                }
+                dustGeo.attributes.position.needsUpdate = true;
+            }
+
+            return { scene, update };
+        }
+
+        function buildAfter(env, tex, palette) {
+            const scene = new THREE.Scene();
+            scene.environment = env;
+
+            scene.add(new THREE.HemisphereLight(0xf4f6ff, 0x3a3e46, 0.75));
+            const sun = new THREE.DirectionalLight(0xfff3e2, 1.45);
+            sun.position.set(5, 9, 6);
+            sun.castShadow = true;
+            sun.shadow.mapSize.set(1024, 1024);
+            Object.assign(sun.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 25 });
+            sun.shadow.bias = -0.0006;
+            scene.add(sun);
+            [[-2, 3.5, -3], [2.6, 3.5, 1]].forEach(([x, y, z]) => { const l = new THREE.PointLight(0xffe6c2, 7, 12, 1.5); l.position.set(x, y, z); scene.add(l); });
+
+            const cutMat = new THREE.MeshStandardMaterial({ color: 0x353a41, roughness: 0.95 });
+            const sealedMat = new THREE.MeshStandardMaterial({ map: tex.sealed, color: 0xdedbd6, roughness: 0.75, envMapIntensity: 0.4 });
+            const floorMat = new THREE.MeshStandardMaterial({ map: tex.floorPrepped, roughness: 0.82, envMapIntensity: 0.4 });
+            buildShell(scene, { floorMat, backMat: sealedMat, leftMat: sealedMat, cutMat });
+
+            // Raw-wall overlays that get "sealed away" bottom-up during the install replay.
+            const wallU = makeRevealUniforms({ uRimColor: { value: new THREE.Color(0.35, 0.6, 1.0) } });
+            wallU.uReveal.value = 2;
+            const rawMat = (t) => { const m = new THREE.MeshStandardMaterial({ map: t, roughness: 0.95, envMapIntensity: 0.3 }); addReveal(m, 'wipe', wallU); return m; };
+            const backRaw = new THREE.Mesh(new THREE.PlaneGeometry(10, 4), rawMat(tex.wallBack));
+            backRaw.position.set(0, 2, -3.994); backRaw.receiveShadow = true;
+            const leftRaw = new THREE.Mesh(new THREE.PlaneGeometry(8, 4), rawMat(tex.wallLeft));
+            leftRaw.position.set(-4.994, 2, 0); leftRaw.rotation.y = Math.PI / 2; leftRaw.receiveShadow = true;
+            scene.add(backRaw, leftRaw);
+
+            // Metallic epoxy with a radial pour mask
+            const epoxyU = makeRevealUniforms();
+            const epoxyMat = new THREE.MeshPhysicalMaterial({
+                map: new THREE.CanvasTexture(epoxyTexture(palette)), metalness: 0.55, roughness: 0.16,
+                clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.35,
+            });
+            epoxyMat.map.colorSpace = THREE.SRGBColorSpace;
+            addReveal(epoxyMat, 'radial', epoxyU);
+            epoxyU.uRimColor.value.set(palette.hi).multiplyScalar(0.8);
+            const epoxy = new THREE.Mesh(new THREE.PlaneGeometry(10, 8), epoxyMat);
+            epoxy.rotation.x = -Math.PI / 2; epoxy.position.y = 0.01; epoxy.receiveShadow = true;
+            scene.add(epoxy);
+
+            // Metallic flake glints that twinkle across the cured floor
+            const flakeCount = 1500, fp = new Float32Array(flakeCount * 3), fph = new Float32Array(flakeCount), rand = mulberry32(9);
+            for (let i = 0; i < flakeCount; i++) { fp[i * 3] = -4.9 + rand() * 9.8; fp[i * 3 + 1] = 0.02; fp[i * 3 + 2] = -3.9 + rand() * 7.8; fph[i] = rand(); }
+            const flakeGeo = new THREE.BufferGeometry();
+            flakeGeo.setAttribute('position', new THREE.BufferAttribute(fp, 3));
+            flakeGeo.setAttribute('aPhase', new THREE.BufferAttribute(fph, 1));
+            const flakeMat = new THREE.ShaderMaterial({
+                transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+                uniforms: {
+                    uTime: epoxyU.uTime, uReveal: epoxyU.uReveal, uOrigin: epoxyU.uOrigin, uAspect: epoxyU.uAspect,
+                    uColor: { value: new THREE.Color(palette.hi) }, uPR: { value: 1 },
+                },
+                vertexShader: `
+                    uniform float uTime, uReveal, uPR; uniform vec2 uOrigin, uAspect;
+                    attribute float aPhase; varying float vA;
+                    void main() {
+                        vec2 uvp = vec2((position.x + 5.0) / 10.0, (4.0 - position.z) / 8.0);
+                        float inside = step(length((uvp - uOrigin) * uAspect), uReveal - 0.03);
+                        float tw = pow(max(0.0, sin(uTime * 2.2 + aPhase * 6.2832)), 14.0);
+                        vA = tw * inside;
+                        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = (1.5 + 4.0 * tw) * uPR * (7.0 / -mv.z);
+                        gl_Position = projectionMatrix * mv;
+                    }`,
+                fragmentShader: `
+                    uniform vec3 uColor; varying float vA;
+                    void main() {
+                        float d = length(gl_PointCoord - 0.5);
+                        float a = smoothstep(0.5, 0.0, d) * vA;
+                        if (a < 0.01) discard;
+                        gl_FragColor = vec4(uColor * a, a);
+                    }`,
+            });
+            scene.add(new THREE.Points(flakeGeo, flakeMat));
+
+            // ---- Fixtures (each is a group anchored at floor level so it can "pop" in) ----
+            const fixtures = [];
+            const fixture = (x, z, at) => { const g = new THREE.Group(); g.position.set(x, 0, z); scene.add(g); fixtures.push({ g, at }); return g; };
+
+            // Perimeter drain tile channels
+            const grateBack = grateTexture(false); grateBack.repeat.set(40, 1);
+            const grateLeft = grateTexture(true); grateLeft.repeat.set(1, 32);
+            const chanBack = fixture(0, -3.9, 1.7);
+            box(10, 0.03, 0.17, new THREE.MeshStandardMaterial({ map: grateBack, metalness: 0.6, roughness: 0.45 }), 0, 0.02, 0, chanBack);
+            const chanLeft = fixture(-4.9, 0.05, 1.8);
+            box(0.17, 0.03, 7.9, new THREE.MeshStandardMaterial({ map: grateLeft, metalness: 0.6, roughness: 0.45 }), 0, 0.02, 0, chanLeft);
+
+            // Sump pit, discharge line, check valve, battery backup
+            const pvc = new THREE.MeshStandardMaterial({ color: 0xf2f2ef, roughness: 0.45 });
+            const dark = new THREE.MeshStandardMaterial({ color: 0x1c1f23, roughness: 0.55, metalness: 0.2 });
+            const sump = fixture(-4.45, 2.9, 1.9);
+            cyl(0.42, 0.05, dark, 0, 0.03, 0, sump, 40);
+            cyl(0.12, 0.04, new THREE.MeshStandardMaterial({ color: 0x2c3238, roughness: 0.4 }), 0, 0.07, 0, sump);
+            cyl(0.05, 0.4, pvc, -0.2, 0.09, 0, sump).rotation.z = Math.PI / 2;
+            cyl(0.05, 3.1, pvc, -0.4, 1.6, 0, sump);
+            cyl(0.075, 0.2, new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.4, metalness: 0.4 }), -0.4, 0.95, 0, sump);
+            box(0.34, 0.3, 0.26, new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.5 }), -0.1, 0.16, 0.72, sump);
+            const ledMat = new THREE.MeshStandardMaterial({ color: 0x34d399, emissive: 0x34d399, emissiveIntensity: 3 });
+            const led = new THREE.Mesh(new THREE.SphereGeometry(0.025, 10, 8), ledMat);
+            led.position.set(-0.1, 0.33, 0.86); sump.add(led);
+
+            // Clean insulated line where the rusty pipe used to be
+            const line = fixture(0, -3.82, 2.0);
+            cyl(0.11, 10.2, pvc, -0.1, 3.45, 0, line).rotation.z = Math.PI / 2;
+
+            // Dehumidifier with a lit RH display
+            const white = new THREE.MeshStandardMaterial({ color: 0xf3f4f6, roughness: 0.5 });
+            const front = new THREE.MeshStandardMaterial({ map: dehumidifierFront(), roughness: 0.5, emissive: 0x0a1f16, emissiveIntensity: 0.4 });
+            const dehu = fixture(3.9, -3.55, 2.05);
+            box(0.55, 0.85, 0.38, [white, white, white, white, front, white], 0, 0.435, 0, dehu);
+
+            // Organised, dry storage where the soggy boxes were
+            const steel = new THREE.MeshStandardMaterial({ color: 0x9aa3ad, metalness: 0.7, roughness: 0.35 });
+            const binMat = new THREE.MeshStandardMaterial({ color: 0x3f4a57, roughness: 0.6 });
+            const lidMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.5 });
+            const shelf = fixture(-4.62, -2.45, 2.1);
+            [[-0.22, -0.68], [0.22, -0.68], [-0.22, 0.68], [0.22, 0.68]].forEach(([x, z]) => box(0.04, 2.1, 0.04, steel, x, 1.05, z, shelf));
+            [0.08, 0.75, 1.42, 2.06].forEach((y, i) => {
+                box(0.5, 0.035, 1.42, steel, 0, y, 0, shelf);
+                if (i < 3) [-0.42, 0.02, 0.44].forEach((z) => { box(0.4, 0.3, 0.38, binMat, 0, y + 0.17, z, shelf); box(0.42, 0.03, 0.4, lidMat, 0, y + 0.335, z, shelf); });
+            });
+
+            // Warm LED coves along the wall tops
+            const ledStrip = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff0d6, emissiveIntensity: 2.4 });
+            box(10, 0.04, 0.05, ledStrip, 0, 3.9, -3.96, scene).castShadow = false;
+            box(0.05, 0.04, 7.9, ledStrip, -4.96, 3.9, 0, scene).castShadow = false;
+
+            function setPalette(p) {
+                const old = epoxyMat.map;
+                epoxyMat.map = new THREE.CanvasTexture(epoxyTexture(p));
+                epoxyMat.map.colorSpace = THREE.SRGBColorSpace;
+                epoxyMat.map.anisotropy = old.anisotropy;
+                epoxyMat.needsUpdate = true;
+                old.dispose();
+                epoxyU.uRimColor.value.set(p.hi).multiplyScalar(0.8);
+                flakeMat.uniforms.uColor.value.set(p.hi);
+            }
+
+            function setInstall(t) {
+                // t is seconds into the install timeline; Infinity == finished
+                wallU.uReveal.value = t === Infinity ? 2 : -0.06 + remap(t, 0.4, 1.9) * 1.12;
+                for (const f of fixtures) {
+                    const k = t === Infinity ? 1 : easeOutBack(remap(t, f.at, f.at + 0.5));
+                    f.g.visible = k > 0.001;
+                    f.g.scale.setScalar(Math.max(k, 0.001));
+                }
+                epoxyU.uReveal.value = t === Infinity ? 2 : easeInOut(remap(t, 2.6, 5.6)) * 0.86;
+            }
+
+            function update(t) {
+                epoxyU.uTime.value = t; wallU.uTime.value = t;
+                ledMat.emissiveIntensity = Math.sin(t * 3) > 0.2 ? 3 : 0.4;
+            }
+
+            return { scene, update, setPalette, setInstall, flakeMat, epoxyMat };
+        }
+
+        /* ------------------------------------------------------------------
+         * App
+         * ------------------------------------------------------------------ */
+        let started = false;
+
+        function init() {
+            let renderer;
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: true, powerPreference: 'high-performance' });
+            } catch (err) {
+                loader.innerHTML = '<span>3D preview needs WebGL. Please try a modern browser.</span>';
+                return;
+            }
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.05;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.setScissorTest(true);
+
+            const pmrem = new THREE.PMREMGenerator(renderer);
+            const env = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+            const aniso = renderer.capabilities.getMaxAnisotropy();
+            const toTex = (c) => { const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = aniso; return t; };
+
+            const concrete = concreteBase(7);
+            const tex = {
+                floorBefore: toTex(floorBeforeTexture(concrete)),
+                floorPrepped: toTex(floorPreppedTexture(concrete)),
+                wallBack: toTex(blockWallTexture(3, { crackU: 0.25, moldU: [0.04, 0.9] })),
+                wallLeft: toTex(blockWallTexture(4, { crackU: 0.72, moldU: [0.33] })),
+                sealed: toTex(sealedWallTexture(5)),
+            };
+
+            let paletteKey = 'gold';
+            const before = buildBefore(env, tex);
+            const after = buildAfter(env, tex, PALETTES[paletteKey]);
+            after.epoxyMat.map.anisotropy = aniso;
+            after.flakeMat.uniforms.uPR.value = renderer.getPixelRatio();
+
+            const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+            const target = new THREE.Vector3(-0.6, 1.05, -0.6);
+            const baseAz = Math.atan2(6.8, 8.4), baseR = Math.hypot(6.8, 8.4), baseH = 3.9;
+            let distScale = 1;
+
+            // ---- Hotspot DOM ----
+            const layers = { before: stage.querySelector('[data-side="before"]'), after: stage.querySelector('[data-side="after"]') };
+            const spots = HOTSPOTS.map((h) => {
+                const el = document.createElement('div');
+                el.className = 'ba-hotspot';
+                el.style.setProperty('--c', h.c);
+                el.innerHTML = `<span class="dot"></span><span class="txt">${h.label}</span>`;
+                layers[h.side].appendChild(el);
+                return { el, v: new THREE.Vector3(...h.p) };
+            });
+            const proj = new THREE.Vector3();
+
+            // ---- State ----
+            let W = 1, H = 1;
+            let split = 0.5, splitTarget = 0.5, lastSplitCss = -1;
+            let auto = !reduceMotion, autoT = 0;
+            let dragging = false;
+            const pointer = { x: 0, y: 0, sx: 0, sy: 0 };
+            const install = { active: false, t: 0, dur: 6.4, resumeAuto: false };
+            let captionTimer = 0;
+
+            function setAuto(on) {
+                auto = on;
+                autoBtn.setAttribute('aria-pressed', String(on));
+            }
+            setAuto(auto);
+
+            function resize() {
+                W = stage.clientWidth; H = stage.clientHeight;
+                renderer.setSize(W, H, false);
+                const aspect = W / H;
+                camera.aspect = aspect;
+                camera.fov = aspect < 1 ? 58 : aspect < 1.4 ? 50 : 42;
+                distScale = aspect < 1 ? 1.25 : 1;
+                camera.updateProjectionMatrix();
+            }
+            new ResizeObserver(resize).observe(stage);
+            resize();
+
+            function setCaption(text) {
+                if (caption.textContent !== text) caption.textContent = text;
+                caption.classList.toggle('is-visible', !!text);
+            }
+
+            function startInstall(fromT = 0) {
+                if (reduceMotion) { after.setInstall(Infinity); return; }
+                install.resumeAuto = install.active ? install.resumeAuto : auto;
+                install.active = true; install.t = fromT;
+                setAuto(false);
+                splitTarget = 0.1;
+                layers.after.classList.add('is-hidden');
+                after.setInstall(fromT);
+            }
+
+            function finishInstall() {
+                install.active = false;
+                after.setInstall(Infinity);
+                splitTarget = 0.5;
+                layers.after.classList.remove('is-hidden');
+                if (install.resumeAuto) { setAuto(true); autoT = 0; }
+                captionTimer = 1.6;
+            }
+
+            // ---- Input ----
+            const splitFromEvent = (e) => {
+                const r = stage.getBoundingClientRect();
+                split = splitTarget = Math.min(0.98, Math.max(0.02, (e.clientX - r.left) / r.width));
+            };
+            // Touches that start off the handle only engage after a horizontal move,
+            // so vertical page scrolling over the stage doesn't yank the divider.
+            let pendingTouchX = null;
+            const beginDrag = (e) => {
+                dragging = true;
+                stage.classList.add('is-dragging');
+                stage.setPointerCapture(e.pointerId);
+                setAuto(false);
+                install.resumeAuto = false;
+                splitFromEvent(e);
+            };
+            stage.addEventListener('pointerdown', (e) => {
+                if (e.button !== 0) return;
+                if (e.pointerType === 'touch' && !e.target.closest('.ba-handle')) { pendingTouchX = e.clientX; return; }
+                beginDrag(e);
+            });
+            stage.addEventListener('pointermove', (e) => {
+                const r = stage.getBoundingClientRect();
+                pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+                pointer.y = ((e.clientY - r.top) / r.height) * 2 - 1;
+                if (pendingTouchX !== null && Math.abs(e.clientX - pendingTouchX) > 8) { pendingTouchX = null; beginDrag(e); }
+                if (dragging) splitFromEvent(e);
+            });
+            const endDrag = () => { pendingTouchX = null; dragging = false; stage.classList.remove('is-dragging'); };
+            stage.addEventListener('pointerup', endDrag);
+            stage.addEventListener('pointercancel', endDrag);
+            stage.addEventListener('pointerleave', () => { pointer.x = pointer.y = 0; });
+
+            handle.addEventListener('keydown', (e) => {
+                const step = e.shiftKey ? 0.1 : 0.04;
+                const map = { ArrowLeft: -step, ArrowDown: -step, ArrowRight: step, ArrowUp: step };
+                if (e.key in map) splitTarget = Math.min(0.98, Math.max(0.02, splitTarget + map[e.key]));
+                else if (e.key === 'Home') splitTarget = 0.02;
+                else if (e.key === 'End') splitTarget = 0.98;
+                else return;
+                e.preventDefault();
+                setAuto(false);
+            });
+
+            autoBtn.addEventListener('click', () => { setAuto(!auto); autoT = Math.asin(Math.max(-1, Math.min(1, (split - 0.5) / 0.3))) / 0.5; });
+            replayBtn.addEventListener('click', () => startInstall(0));
+
+            document.querySelectorAll('.ba-swatch').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const key = btn.dataset.palette;
+                    if (key === paletteKey) return;
+                    paletteKey = key;
+                    document.querySelectorAll('.ba-swatch').forEach((b) => b.setAttribute('aria-checked', String(b === btn)));
+                    paletteName.textContent = PALETTES[key].name;
+                    after.setPalette(PALETTES[key]);
+                    after.epoxyMat.map.anisotropy = aniso;
+                    startInstall(2.6); // re-pour just the epoxy in the new finish
+                });
+            });
+
+            // ---- Loop ----
+            const clock = new THREE.Clock();
+            let elapsed = 0;
+
+            function tick() {
+                const dt = Math.min(clock.getDelta(), 0.05);
+                elapsed += dt;
+
+                if (install.active) {
+                    install.t += dt;
+                    after.setInstall(install.t);
+                    const t = install.t;
+                    setCaption(t < 1.9 ? 'Step 1 · Crack injection & wall sealing'
+                        : t < 2.6 ? 'Step 2 · Interior drain tile + sump pump'
+                        : 'Step 3 · Metallic epoxy pour');
+                    if (t >= install.dur) finishInstall();
+                } else if (captionTimer > 0) {
+                    captionTimer -= dt;
+                    setCaption(captionTimer > 0 ? 'Complete · Dry, sealed & showroom-ready' : '');
+                }
+
+                if (auto && !dragging && !install.active) {
+                    autoT += dt;
+                    splitTarget = 0.5 + 0.3 * Math.sin(autoT * 0.5);
+                }
+                if (!dragging) split += (splitTarget - split) * Math.min(1, dt * 5);
+
+                const css = Math.round(split * 1000) / 10;
+                if (css !== lastSplitCss) {
+                    lastSplitCss = css;
+                    stage.style.setProperty('--split', css + '%');
+                    handle.setAttribute('aria-valuenow', String(Math.round(css)));
+                }
+
+                // Camera: slow orbit sway + pointer parallax
+                pointer.sx += (pointer.x - pointer.sx) * Math.min(1, dt * 3);
+                pointer.sy += (pointer.y - pointer.sy) * Math.min(1, dt * 3);
+                const sway = reduceMotion ? 0 : 0.1 * Math.sin(elapsed * 0.15);
+                const az = baseAz + sway + (dragging ? 0 : pointer.sx * 0.06);
+                const r = baseR * distScale;
+                camera.position.set(target.x + Math.sin(az) * r, target.y + baseH * distScale - pointer.sy * 0.35, target.z + Math.cos(az) * r);
+                camera.lookAt(target);
+
+                before.update(elapsed, dt);
+                after.update(elapsed);
+
+                // Split render: left of the divider = before, right = after.
+                const sx = Math.round(split * W);
+                renderer.setViewport(0, 0, W, H);
+                renderer.setScissor(0, 0, sx, H);
+                renderer.render(before.scene, camera);
+                renderer.setScissor(sx, 0, W - sx, H);
+                renderer.render(after.scene, camera);
+
+                for (const s of spots) {
+                    proj.copy(s.v).project(camera);
+                    s.el.style.transform = `translate(${((proj.x + 1) / 2) * W}px, ${((1 - proj.y) / 2) * H}px)`;
+                }
+            }
+
+            // Only animate while the stage is on screen; play the install once on first view.
+            let playedIntro = false;
+            new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    clock.getDelta();
+                    renderer.setAnimationLoop(tick);
+                    if (!playedIntro && entry.intersectionRatio > 0.35) { playedIntro = true; startInstall(0); }
+                } else {
+                    renderer.setAnimationLoop(null);
+                }
+            }, { threshold: [0, 0.35] }).observe(stage);
+
+            after.setInstall(Infinity);
+            tick();
+            loader.classList.add('is-done');
+        }
+
+        // Build lazily: textures are painted procedurally, so wait until the section is near the viewport.
+        new IntersectionObserver((entries, obs) => {
+            if (started || !entries.some((e) => e.isIntersecting)) return;
+            started = true;
+            obs.disconnect();
+            setTimeout(init, 30); // let the loader paint first
+        }, { rootMargin: '400px 0px' }).observe(stage);
+    </script>
+</body>
+</html>
