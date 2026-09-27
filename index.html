@@ -1606,13 +1606,13 @@
                 });
             }
 
-            // Hero content drifts up and fades slightly as you scroll past it
+            // Parallax on the hero's background floor only; the content stays put so the form
+            // never slides over the trust badges or fades out while someone is reading it
             const heroEl = document.querySelector('.hero');
-            const heroInner = heroEl.querySelector(':scope > .max-w-7xl');
+            const heroFloor = document.getElementById('hero-floor');
             window.addEventListener('scroll', () => {
-                const h = heroEl.offsetHeight, y = Math.min(window.scrollY, h);
-                heroInner.style.transform = y > 0 ? `translateY(${y * 0.16}px)` : '';
-                heroInner.style.opacity = String(1 - (y / h) * 0.55);
+                const y = Math.min(window.scrollY, heroEl.offsetHeight);
+                heroFloor.style.transform = y > 0 ? `translate3d(0, ${y * 0.3}px, 0)` : '';
             }, { passive: true });
         }
 
