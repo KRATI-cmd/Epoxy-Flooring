@@ -16,6 +16,17 @@
     <link rel="stylesheet" href="assets/css/tailwind.css">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <noscript><style>.page-loader { display: none !important; }</style></noscript>
+    <!-- Vercel Web Analytics (plain-HTML setup; the Next.js <Analytics /> component needs a Next.js app).
+         Vercel serves the script from /_vercel/insights on the deployed site, so skip it locally. -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+        if (location.protocol.startsWith('http') && !/^(localhost|127\.|\[::1\])/.test(location.hostname)) {
+            const vaScript = document.createElement('script');
+            vaScript.defer = true;
+            vaScript.src = '/_vercel/insights/script.js';
+            document.head.appendChild(vaScript);
+        }
+    </script>
     <!-- Custom CSS for any additional styles -->
     <style>
         /* ---------- Page loader (critical: styled before anything else paints) ---------- */
