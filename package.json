@@ -1,0 +1,12 @@
+{
+  "name": "epoxyguard-pros-site",
+  "private": true,
+  "description": "EpoxyGuard Pros landing page",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o assets/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o assets/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
