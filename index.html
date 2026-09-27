@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epoxy Flooring & Basement Waterproofing - Premium Local Service</title>
+    <title>EpoxyGuard Pros | Epoxy Flooring &amp; Basement Waterproofing in Austin, TX</title>
+    <link rel="icon" id="favicon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <meta name="theme-color" content="#ea580c">
     <!-- Tailwind CSS via CDN -->
     <script>
         // Restore the visitor's theme before first paint (no flash of the default colors)
@@ -16,17 +19,6 @@
     <link rel="stylesheet" href="assets/css/tailwind.css">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <noscript><style>.page-loader { display: none !important; }</style></noscript>
-    <!-- Vercel Web Analytics (plain-HTML setup; the Next.js <Analytics /> component needs a Next.js app).
-         Vercel serves the script from /_vercel/insights on the deployed site, so skip it locally. -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-        if (location.protocol.startsWith('http') && !/^(localhost|127\.|\[::1\])/.test(location.hostname)) {
-            const vaScript = document.createElement('script');
-            vaScript.defer = true;
-            vaScript.src = '/_vercel/insights/script.js';
-            document.head.appendChild(vaScript);
-        }
-    </script>
     <!-- Custom CSS for any additional styles -->
     <style>
         /* ---------- Page loader (critical: styled before anything else paints) ---------- */
@@ -700,8 +692,17 @@
     <header id="site-header" class="site-header border-b border-white/10 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 h-16">
             <div class="flex items-center space-x-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10 text-brand-400 flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M6 16h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="brand-logo h-8 w-8 sm:h-10 sm:w-10 flex-none" viewBox="0 0 64 64" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brand-logo-grad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color: rgb(var(--brand-400))"/>
+                            <stop offset="1" style="stop-color: rgb(var(--brand-700))"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="64" height="64" rx="16" fill="url(#brand-logo-grad)"/>
+                    <path d="M32 9c-2.5 7-11 13-11 21a11 11 0 0 0 22 0c0-8-8.5-14-11-21z" fill="#fff"/>
+                    <path d="M26.5 31a5.5 5.5 0 0 0 5.5 5.5" fill="none" style="stroke: rgb(var(--brand-700))" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M12 50c6.5-3.5 13.5-3.5 20 0s13.5 3.5 20 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3.5" stroke-linecap="round"/>
                 </svg>
                 <span class="font-bold text-base min-[400px]:text-lg sm:text-xl text-white whitespace-nowrap">EpoxyGuard Pros</span>
             </div>
@@ -1563,8 +1564,18 @@
         const finishTag = document.getElementById('hero-finish-tag');
         const currentTheme = () => (THEMES[document.documentElement.dataset.theme] ? document.documentElement.dataset.theme : 'orange');
 
+        // Browser-tab logo, recolored from the active theme's tokens
+        const favicon = document.getElementById('favicon');
+        const logoSvg = (light, dark) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#g)"/><path d="M32 9c-2.5 7-11 13-11 21a11 11 0 0 0 22 0c0-8-8.5-14-11-21z" fill="#fff"/><path d="M26.5 31a5.5 5.5 0 0 0 5.5 5.5" fill="none" stroke="${dark}" stroke-width="3" stroke-linecap="round"/><path d="M12 50c6.5-3.5 13.5-3.5 20 0s13.5 3.5 20 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3.5" stroke-linecap="round"/></svg>`;
+        function updateFavicon() {
+            const cs = getComputedStyle(document.documentElement);
+            const rgb = (name) => `rgb(${cs.getPropertyValue(name).trim().split(/\s+/).join(',')})`;
+            favicon.href = 'data:image/svg+xml,' + encodeURIComponent(logoSvg(rgb('--brand-400'), rgb('--brand-700')));
+        }
+
         function applyTheme(key, remember = true) {
             document.documentElement.dataset.theme = key;
+            updateFavicon();
             themeOptions.forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeChoice === key)));
             finishTag.textContent = `Shown: ${THEMES[key].floor} metallic epoxy`;
             if (remember) { try { localStorage.setItem('epg-theme-v2', key); } catch (e) {} }
@@ -1863,7 +1874,8 @@
     {
         "imports": {
             "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+            "@vercel/analytics": "https://cdn.jsdelivr.net/npm/@vercel/analytics@2.0.1/dist/index.mjs"
         }
     }
     </script>
@@ -2809,6 +2821,39 @@
                     loader.innerHTML = '<span>3D preview could not load. Check your connection and refresh.</span>';
                 });
         }, { rootMargin: '900px 0px' }).observe(stage);
+    </script>
+
+    <!-- ===================== Vercel Web Analytics (@vercel/analytics) ===================== -->
+    <!-- The page has no bundler, so the package's browser build is mapped in the import map above
+         (keep its version in step with package.json). -->
+    <script type="module">
+        import { inject, track } from '@vercel/analytics';
+
+        // Locally, "development" mode loads Vercel's debug script: events are logged to the console, nothing is sent.
+        const isLocal = !location.protocol.startsWith('http') || /^(localhost|127\.|\[::1\])/.test(location.hostname);
+        inject({ mode: isLocal ? 'development' : 'production' });
+
+        // Conversion events (custom events show in the Vercel dashboard on Pro/Enterprise plans).
+        // Capture phase, so values are read before the forms' own handlers reset them.
+        document.addEventListener('submit', (e) => {
+            const form = e.target;
+            if (form.id === 'lead-form') {
+                track('Quote Form Submitted', { service: form.querySelector('select')?.value || 'not selected' });
+            } else if (form.id === 'calculator-form') {
+                track('Estimate Requested', {
+                    projectType: form.querySelector('input[name="projectType"]:checked')?.value,
+                    condition: form.querySelector('input[name="condition"]:checked')?.value,
+                    area: Number(document.getElementById('area-slider').value),
+                });
+            }
+        }, true);
+        document.addEventListener('click', (e) => {
+            const tel = e.target.closest('a[href^="tel:"]');
+            if (!tel) return;
+            const where = tel.closest('.topbar') ? 'top bar' : tel.closest('.mobile-cta') ? 'mobile call bar'
+                : tel.closest('footer') ? 'footer' : tel.closest('section')?.id || 'hero';
+            track('Phone Click', { location: where });
+        }, true);
     </script>
 </body>
 </html>
